@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Bottom
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Balls
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: background
+    uniqueID: 3460946839
+    locked: 0
+  - name: bricks
+    uniqueID: 1901868669
+    locked: 0
+  - name: balls
+    uniqueID: 3559994857
+    locked: 0
+  - name: BallLauncher
+    uniqueID: 1945729913
+    locked: 0
+  - name: Ui
+    uniqueID: 2100215737
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  m_RenderingLayers:
+  - Default
