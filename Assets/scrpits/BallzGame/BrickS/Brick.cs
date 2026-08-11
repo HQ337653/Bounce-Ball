@@ -150,7 +150,7 @@ namespace BallzGame.Bricks
         public void Die(Vector2 force)
         {
             brickEffects.MakeBreakEffect();
-            PointPrefab = Instantiate(PointPrefab, transform.position, Quaternion.identity);
+            PointPrefab = Instantiate(PointPrefab, transform.position, Quaternion.identity,GameManager.Instance.VisualEffectsParent);
             PointPrefab.Init(transform.position, force);
 
             GameManager.Instance.feverController.AddFeverPoints(1);

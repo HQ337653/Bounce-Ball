@@ -116,7 +116,7 @@ namespace BallzGame.Managers
 
         IEnumerator ShootRoutine(Vector2 target)
         {
-
+            Transform parent = GameManager.Instance.BallsParent;
             Vector2 dir =
                 (target - (Vector2)transform.position).normalized;
 
@@ -130,7 +130,7 @@ namespace BallzGame.Managers
                     Instantiate(
                         prefab,
                         transform.position,
-                        Quaternion.identity
+                        Quaternion.identity,parent
                     );
 
                 obj.Init(this, speed);

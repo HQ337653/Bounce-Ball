@@ -75,6 +75,7 @@ namespace BallzGame.Managers
 
         public List<Brick> SpawnRow(int level, int width)
         {
+            var parent = GameManager.Instance.BricksParent;
             var bricks = new List<Brick>();
 
             for (int x = 0; x < width; x++)
@@ -89,7 +90,8 @@ namespace BallzGame.Managers
                         Instantiate(
                             prefab,
                             new Vector3(x, 0, 0),
-                            Quaternion.identity
+                            Quaternion.identity,
+                            parent
                         );
 
 

@@ -14,17 +14,36 @@ namespace BallzGame.Managers
 
     public class GameManager : MonoBehaviour
     {
-        public enum State
-        {
-            SpawnRow,
-            WaitForInputAndComeback,
-            Fever,
-            GameOver
-        }
-        public GameResultPanel.GameResult CurrentResult;
-        public static GameManager Instance { get; private set; }
-        public Transform BallzCameraPosition;
+
+        [Header("controllers")]
+        public BrickSpawner spawner;
+        public BallLauncher launcher;
+        public FeverController feverController;
+        public ShopController shopController;
+        public Inventory inventory;
         public BallExtraDamage BallExtraDamageController;
+
+
+
+
+        public static GameManager Instance { get; private set; }
+        [Header("scene reference")]
+        public Transform BallzCameraPosition;
+        public Transform BricksParent;
+        public Transform BallsParent;
+        public Transform VisualEffectsParent;
+        [Header("game setting")]
+        public int width = 7;
+        public int height = 15;
+        [Header("current game status")]
+        public Brick[,] grid;
+        public int level = 1;
+        public bool Dofever;
+        public State state;
+        public GameResultPanel.GameResult CurrentResult;
+
+        public Transform BrickPointTarget;
+        public Camera MainCamera;
         private void Awake()
         {
             if (Instance == null)
@@ -32,24 +51,6 @@ namespace BallzGame.Managers
                 Instance = FindAnyObjectByType<GameManager>();
             }
         }
-
-        public bool Dofever;
-        public State state;
-
-        public int width = 7;
-        public int height = 15;
-
-        public Brick[,] grid;
-
-        public int level = 1;
-
-        public BrickSpawner spawner;
-        public BallLauncher launcher;
-        public FeverController feverController;
-        public ShopController shopController;
-        public Transform BrickPointTarget;
-        public Camera MainCamera;
-        public Inventory inventory;
         public void NewGame()
         {
             MainMenu.Instance.Goto(MainMenu.CurrentPanel.InGame);
@@ -290,6 +291,12 @@ namespace BallzGame.Managers
             Debug.Log(result);
         }
 
+    }public enum State
+    {
+        SpawnRow,
+        WaitForInputAndComeback,
+        Fever,
+        GameOver
     }
 
 

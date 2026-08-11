@@ -1,4 +1,5 @@
 using System.Collections;
+using BallzGame.Managers;
 using TMPro;
 using UnityEngine;
 
@@ -12,29 +13,30 @@ namespace Utils
         public void DoFloatText(
             int number,
             Vector3 position,
-            Color c,
-            Vector2 direction, float duration = 0.6f
+            Color color,
+            Vector2 direction, float duration = 0.6f,Transform parent = null
         )
         {
-            transform.position = position;
 
-            text.text = number.ToString();
-            text.color = c;
-
-            StartCoroutine(FloatRoutine(direction.normalized, duration));
+            DoFloatText(number.ToString(), position,color, direction, duration, parent);
         }
 
         public void DoFloatText(
             string content,
             Vector3 position,
-            Color c,
-            Vector2 direction, float duration = 0.6f
+            Color color,
+            Vector2 direction, float duration = 0.6f,Transform parent = null
         )
         {
+            if (parent == null)
+            {
+                parent=GameManager.Instance.VisualEffectsParent;
+            }
+            transform.SetParent(parent);
             transform.position = position;
 
             text.text = content;
-            text.color = c;
+            text.color = color;
 
             StartCoroutine(FloatRoutine(direction.normalized, duration));
         }

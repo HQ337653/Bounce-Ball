@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using BallzGame.Managers;
 
 namespace BallzGame.Bricks
 {
@@ -50,7 +51,7 @@ namespace BallzGame.Bricks
 
 		public void MakeBreakEffect()
 		{
-			Instantiate(EffectPrefab, transform.position, Quaternion.identity);
+			Instantiate(EffectPrefab, transform.position, Quaternion.identity,GameManager.Instance.VisualEffectsParent);
 		}
 
 		private IEnumerator FlashEffect()

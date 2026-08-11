@@ -1,5 +1,6 @@
 using System;
 using BallzGame.Bricks;
+using BallzGame.Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,7 +16,7 @@ namespace BallzGame.Balls.SpecialBalls
         {
             if (Random.Range(0, 1) < ExplosionPossibility)
             {
-                Instantiate(ExplosionEffectPrefab, brick.transform.position, Quaternion.identity);
+                Instantiate(ExplosionEffectPrefab, brick.transform.position, Quaternion.identity,GameManager.Instance.BallsParent);
             }
         }
 

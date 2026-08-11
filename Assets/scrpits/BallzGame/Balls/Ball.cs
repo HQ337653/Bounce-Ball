@@ -9,7 +9,7 @@ namespace BallzGame.Balls
 
 	public class Ball : MonoBehaviour
 	{
-		public int BasedDamage = 1;
+		public int BaseDamage = 1;
 		public float BaseSpeed = 1;
 		private BallLauncher launcher;
 		public UnityEvent<Brick> OnBallHit;
@@ -27,7 +27,7 @@ namespace BallzGame.Balls
 			Rigidbody2D rb = GetComponent<Rigidbody2D>();
 			if (brick != null)
 			{
-				var damage = BasedDamage + GameManager.Instance.BallExtraDamageController.GetExtraDamage(Type);
+				var damage = BaseDamage + GameManager.Instance.BallExtraDamageController.GetExtraDamage(Type);
 				brick.TakeDamage(damage, rb.linearVelocity);
 				OnBallHit.Invoke(brick);
 			}
