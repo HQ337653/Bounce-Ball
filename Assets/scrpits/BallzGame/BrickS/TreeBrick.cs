@@ -84,7 +84,7 @@ namespace BallzGame.Bricks.SpecialBricks
                 var script = VARIABLE?.GetComponent<Brick>();
                 if (script)
                 {
-                    script.SetDefence(script.DefensePoint + 3);
+                    script.SetDefence(script.DefencePoint + 3);
                     SurroundingBricks.Add(script);
                 }
             }
@@ -103,7 +103,7 @@ namespace BallzGame.Bricks.SpecialBricks
                 if (brick != null)
                 {
 
-                    brick.SetDefence(brick.DefensePoint - Mathf.Clamp(3, 0, brick.DefensePoint));
+                    brick.SetDefence(brick.DefencePoint - Mathf.Clamp(3, 0, brick.DefencePoint));
                 }
             }
 

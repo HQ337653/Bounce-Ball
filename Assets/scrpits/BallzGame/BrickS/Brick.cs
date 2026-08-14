@@ -1,35 +1,26 @@
 using System;
-using System.Collections.Generic;
 using BallzGame.Bricks.SpecialBricks;
 using BallzGame.Effects;
 using BallzGame.Managers;
 using UnityEngine;
-using TMPro;
-using Utils;
-using Random = UnityEngine.Random;
 
 namespace BallzGame.Bricks
 {
     public class Brick : MonoBehaviour
     {
-        public int hp = 3;
+        public int Hp = 3;
 
-        public Action OnDestory;
-        public int DefensePoint;
-        public TMP_Text hpText;
-        public GameObject BrickVisual;
-        public Gradient colors;
-        public SpriteRenderer CenterSprite;
+        public Action OnDestroy;
+        public int DefencePoint;
         public int OriginalHp;
-        public BrickEffects brickEffects;
+        public BrickVisualEffects VisualEffect;
         public BrickPoint PointPrefab;
-        public FloatText FloatTextPrefab;
         public SpecialBrick SpecialBrick;
 
         void Start()
         {
-            UpdateHPText();
-            SetDefence(DefensePoint);
+            VisualEffect.UpdateHPText(Hp, OriginalHp);
+            SetDefence(DefencePoint);
         }
 
         public void OnRowMoved()
@@ -40,147 +31,94 @@ namespace BallzGame.Bricks
         public void OnMiniGameStart()
         {
             SpecialBrick?.OnMiniGameStart();
-
         }
 
         public void OnMiniGameEnd()
         {
             SpecialBrick?.OnMiniGameEnd();
-
-
         }
 
         public void SetDefence(int defence)
         {
-            DefensePoint = defence;
-            if (DefensePoint > 0)
-            {
-                brickEffects.SetSheildEffect(true);
-            }
-            else
-            {
-                brickEffects.SetSheildEffect(false);
-
-            }
+            DefencePoint = defence;
+            VisualEffect.SetShieldEffect(defence > 0);
         }
 
-        public void AddHP(int hp)
+        public void AddHP(int add)
         {
-            this.hp += hp;
-            UpdateHPText();
+            Hp += add;
+            VisualEffect.UpdateHPText(Hp, OriginalHp);
         }
 
         // 被 Ball 调用
         public void TakeDamage(int damage, Vector2 force = new Vector2())
         {
-            int originalDefense = DefensePoint;
+            int originalDefense = DefencePoint;
             int remainingDamage = damage;
+
             // 先扣护盾
-            if (DefensePoint > 0)
+            if (DefencePoint > 0)
             {
-                if (DefensePoint >= remainingDamage)
+                if (DefencePoint >= remainingDamage)
                 {
-                    SetDefence(DefensePoint - remainingDamage);
+                    SetDefence(DefencePoint - remainingDamage);
                     remainingDamage = 0;
                 }
                 else
                 {
-                    remainingDamage -= DefensePoint;
+                    remainingDamage -= DefencePoint;
                     SetDefence(0);
                 }
 
-                // 显示护盾减少
-                int shieldLoss = originalDefense - DefensePoint;
+                int shieldLoss = originalDefense - DefencePoint;
                 if (shieldLoss > 0)
                 {
-                    FloatText(transform.position, shieldLoss);
+                    VisualEffect.ShowFloatText(transform.position, shieldLoss);
                 }
             }
 
             // 再扣血
             if (remainingDamage > 0)
             {
-                hp -= remainingDamage;
-                UpdateHPText();
+                Hp -= remainingDamage;
+                VisualEffect.UpdateHPText(Hp, OriginalHp);
 
                 // 只有真正掉血才触发受击效果
-                brickEffects.doHit(force);
+                VisualEffect.DoHit(force);
 
-                if (hp <= 0)
+                if (Hp <= 0)
                 {
                     Die(force);
                 }
             }
         }
 
-        void FloatText(Vector3 pos, int val)
-        {
-            if (FloatTextPrefab != null)
-            {
-                Vector3 spawnPos = pos;
-
-                // 👉 稍微抬高一点避免重叠
-                spawnPos += Vector3.up * 0.2f;
-
-                // 👉 随机一点方向（更自然）
-                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
-
-                // 👉 实例化
-                FloatText ft = Instantiate(
-                    FloatTextPrefab,
-                    spawnPos,
-                    Quaternion.identity
-                );
-
-                // 👉 颜色可以自己调（这里红色伤害）
-                ft.DoFloatText(
-                    -val,
-                    spawnPos,
-                    Color.white,
-                    dir
-                );
-            }
-        }
-
-        public void ChangeVisual(bool showing)
-        {
-            BrickVisual.SetActive(showing);
-        }
-
         public void Die(Vector2 force)
         {
-            brickEffects.MakeBreakEffect();
-            PointPrefab = Instantiate(PointPrefab, transform.position, Quaternion.identity,GameManager.Instance.VisualEffectsParent);
-            PointPrefab.Init(transform.position, force);
+            VisualEffect.MakeBreakEffect();
+
+            // 得分预制体由 Brick 自己实例化
+            if (PointPrefab != null)
+            {
+                BrickPoint point = Instantiate(PointPrefab, transform.position, Quaternion.identity,
+                    GameManager.Instance.VisualEffectsParent);
+                point.Init(transform.position, force);
+            }
 
             GameManager.Instance.feverController.AddFeverPoints(1);
             GameManager.Instance.CurrentResult.BricksCount += 1;
             GameManager.Instance.CurrentResult.Points += OriginalHp;
-            OnDestory?.Invoke();
+            OnDestroy?.Invoke();
 
             Destroy(gameObject);
         }
 
-        void UpdateHPText()
-        {
-            if (hpText != null)
-            {
-                // 计算血量百分比（0~1）
-                float hpPercent = (float)hp / 10f;
-
-                // 设置文字
-                hpText.text = hp.ToString();
-
-                // 根据渐变设置颜色
-                CenterSprite.color = colors.Evaluate(hpPercent);
-            }
-        }
-
         public void Init(int i)
         {
-            hp = i;
-            OriginalHp = hp;
-            UpdateHPText();
+            Hp = i;
+            OriginalHp = Hp;
+            VisualEffect.UpdateHPText(Hp, OriginalHp);
         }
     }
 }
+

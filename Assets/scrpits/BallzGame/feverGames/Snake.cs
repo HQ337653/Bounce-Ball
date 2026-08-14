@@ -229,11 +229,11 @@ namespace BallzGame.Minigame
                         continue;
                     }
 
-                    brick.ChangeVisual(false);
+                    brick.VisualEffect.SetVisibility(false);
 
                     GameObject obj;
 
-                    if (brick.hp > hpThreshold)
+                    if (brick.Hp > hpThreshold)
                     {
                         obj = Instantiate(
                             FoodPrefab,
@@ -244,7 +244,7 @@ namespace BallzGame.Minigame
 
                         var text = obj.GetComponentInChildren<TextMeshPro>();
                         if (text != null)
-                            text.text = (brick.hp - hpThreshold).ToString();
+                            text.text = (brick.Hp - hpThreshold).ToString();
 
                         visuals[x, y] = (obj, false);
                     }
@@ -507,7 +507,7 @@ namespace BallzGame.Minigame
                         var brick = context.Grid[x, y];
                         if (brick != null)
                         {
-                            brick.ChangeVisual(true);
+                            brick.VisualEffect.SetVisibility(true);
                         }
 
                         if (tile.Item1 != null)
@@ -521,7 +521,7 @@ namespace BallzGame.Minigame
                                 {
                                     int current = int.Parse(text.text);
 
-                                    int original = brick.hp - hpThreshold;
+                                    int original = brick.Hp - hpThreshold;
 
                                     int damage = original - current;
 
@@ -544,7 +544,7 @@ namespace BallzGame.Minigame
                             {
                                 int current = 0;
 
-                                int original = brick.hp - hpThreshold;
+                                int original = brick.Hp - hpThreshold;
 
                                 int damage = original - current;
 

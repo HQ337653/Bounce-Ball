@@ -351,9 +351,41 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: CenterSprite
+      value: 
+      objectReference: {fileID: 2742323669506688076}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: EffectPrefab
       value: 
       objectReference: {fileID: 8448865817493986001, guid: 70218577a8313cf40bf03c85bd711cab, type: 3}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: Colors.ctime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: Colors.ctime2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: Colors.key1.b
+      value: 0.36801863
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: Colors.key1.g
+      value: 0.91823894
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: Colors.key1.r
+      value: 0.06641343
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: Colors.key2.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: Colors.key2.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: NormalColor.b
       value: 0.49298912
@@ -377,6 +409,10 @@ PrefabInstance:
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: ShieldColor.r
       value: 0.33465052
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: Colors.m_NumColorKeys
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6877929858952508102, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: m_Enabled
@@ -441,6 +477,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4862160624746162985}
   m_SourcePrefab: {fileID: 100100000, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+--- !u!212 &2742323669506688076 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4629431560487495573, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+  m_PrefabInstance: {fileID: 7363873165602284505}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3075594854150008771 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5521147720290536474, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}

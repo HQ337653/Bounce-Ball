@@ -282,7 +282,7 @@ namespace BallzGame.Managers
                     }
                     else
                     {
-                        result += grid[x, y].hp + "\t";
+                        result += grid[x, y].Hp + "\t";
                     }
                 }
 

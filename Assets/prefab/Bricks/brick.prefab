@@ -288,45 +288,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4685cf4f9eb6c3e49a67733d153ae499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Brick
-  hp: 3
+  Hp: 3
   DefensePoint: 0
-  hpText: {fileID: 5607739550677265870}
-  BrickVisual: {fileID: 4689929527597573691}
-  colors:
-    serializedVersion: 2
-    key0: {r: 0.049127746, g: 0.6792453, b: 0.20204337, a: 1}
-    key1: {r: 0.25446472, g: 0.2063604, b: 0.59119487, a: 1}
-    key2: {r: 0.65849084, g: 0, b: 0.67295593, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 32511
-    ctime2: 65535
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 3
-    m_NumAlphaKeys: 2
-  CenterSprite: {fileID: 4629431560487495573}
   OriginalHp: 0
-  brickEffects: {fileID: 6066573623839633467}
+  VisualEffect: {fileID: 6066573623839633467}
   PointPrefab: {fileID: 5426102367861583924, guid: ea2993bf67fdd23419e8df9ac1b48ab0, type: 3}
-  FloatTextPrefab: {fileID: 5088382841924657231, guid: 70a9b49be27104c4ab1a6f7f54a360d6, type: 3}
   SpecialBrick: {fileID: 0}
 --- !u!50 &129500122477862613
 Rigidbody2D:
@@ -366,7 +332,7 @@ GameObject:
   - component: {fileID: 2164181774531199738}
   - component: {fileID: 6066573623839633467}
   m_Layer: 0
-  m_Name: Brick VIsual
+  m_Name: Brick Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -405,14 +371,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BrickEffects
   Flash: {fileID: 8661371777735514086}
   flashSpeed: 20
-  EffectPrefab: {fileID: 8448865817493986001, guid: 70218577a8313cf40bf03c85bd711cab, type: 3}
+  effectPrefab: {fileID: 8448865817493986001, guid: 70218577a8313cf40bf03c85bd711cab, type: 3}
   knockbackTime: 0.03
   returnTime: 0.1
   knockbackMultiplier: 0.02
-  Colors:
+  colors:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key0: {r: 0.022855742, g: 0.84276724, b: 0, a: 1}
+    key1: {r: 0.6037736, g: 0, b: 0.57227945, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -439,10 +405,13 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  CenterSprite: {fileID: 0}
-  ShieldColor: {r: 0.91823894, g: 0.430244, b: 0.5395546, a: 1}
-  NormalColor: {r: 0.16470589, g: 0.92156863, b: 1, a: 1}
-  Outline: {fileID: 4692555174574787316}
+  centerSprite: {fileID: 4629431560487495573}
+  shieldColor: {r: 0, g: 1, b: 0.84446144, a: 1}
+  normalColor: {r: 0.51572317, g: 0.51572317, b: 0.51572317, a: 1}
+  outline: {fileID: 4692555174574787316}
+  hpText: {fileID: 5607739550677265870}
+  brickVisual: {fileID: 4689929527597573691}
+  floatTextPrefab: {fileID: 5088382841924657231, guid: 70a9b49be27104c4ab1a6f7f54a360d6, type: 3}
 --- !u!1 &5521147720290536474
 GameObject:
   m_ObjectHideFlags: 0

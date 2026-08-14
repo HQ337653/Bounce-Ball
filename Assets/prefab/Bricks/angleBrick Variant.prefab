@@ -9815,6 +9815,54 @@ PrefabInstance:
       value: 0.9433962
       objectReference: {fileID: 0}
     - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: BrickVisual
+      value: 
+      objectReference: {fileID: 1026612878343446063}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.ctime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.ctime2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.key0.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.key0.g
+      value: 0.36954296
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.key1.b
+      value: 0.06666663
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.key1.g
+      value: 0.42191753
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.key1.r
+      value: 0.91764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.key2.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.key2.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.key2.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
       propertyPath: NormalColor.b
       value: 1
       objectReference: {fileID: 0}
@@ -9837,6 +9885,10 @@ PrefabInstance:
     - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
       propertyPath: ShieldColor.r
       value: 0.42138356
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603292231130567650, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+      propertyPath: Colors.m_NumColorKeys
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7547896871745341088, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
       propertyPath: m_IsActive
@@ -9866,6 +9918,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3493866069044470490}
   m_SourcePrefab: {fileID: 100100000, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+--- !u!1 &1026612878343446063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2820451484180727266, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
+  m_PrefabInstance: {fileID: 2961964853386828749}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3915099005780198427 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2255804897386815446, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
