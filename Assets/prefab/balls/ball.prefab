@@ -107,12 +107,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f78b3321064c02f42ab41cb93e636b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ball
-  BasedDamage: 1
-  BaseSpeed: 1
+  BaseDamage: 1
   OnBallHit:
     m_PersistentCalls:
       m_Calls: []
   Type: 0
+  Data: {fileID: 11400000, guid: 050fa41de01b07b4ab3758d6f5f63756, type: 2}
+  rb: {fileID: 871378100235937612}
 --- !u!58 &5894049540906907121
 CircleCollider2D:
   m_ObjectHideFlags: 0

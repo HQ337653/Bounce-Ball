@@ -14,7 +14,6 @@ namespace BallzGame.Managers
         public Ball InitialBall;
 
         public float shootInterval = 0.1f;
-        public float speed = 10f;
 
 
         public EventTrigger Clickable;
@@ -22,7 +21,6 @@ namespace BallzGame.Managers
         int activeBalls;
 
         public float BouncedTime;
-        public float SpeedIncrease;
 
         private Coroutine timer;
 
@@ -133,12 +131,9 @@ namespace BallzGame.Managers
                         Quaternion.identity,parent
                     );
 
-                obj.Init(this, speed);
+                obj.Init(this,dir,GameManager.Instance.BallConfig);
 
-                Rigidbody2D rb =
-                    obj.GetComponent<Rigidbody2D>();
 
-                rb.linearVelocity = dir * speed;
 
                 yield return new WaitForSeconds(shootInterval);
             }

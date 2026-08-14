@@ -32,6 +32,8 @@ namespace BallzGame.Managers
         public Transform BricksParent;
         public Transform BallsParent;
         public Transform VisualEffectsParent;
+        public Transform BrickPointTarget;
+        public Camera MainCamera;
         [Header("game setting")]
         public int width = 7;
         public int height = 15;
@@ -41,9 +43,8 @@ namespace BallzGame.Managers
         public bool Dofever;
         public State state;
         public GameResultPanel.GameResult CurrentResult;
-
-        public Transform BrickPointTarget;
-        public Camera MainCamera;
+        [Header("Configs")]
+        public BallSystemConfig BallConfig;
         private void Awake()
         {
             if (Instance == null)

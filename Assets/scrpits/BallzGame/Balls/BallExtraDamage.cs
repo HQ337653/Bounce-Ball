@@ -8,10 +8,21 @@ namespace BallzGame.Balls
 	{
 		[SerializeField]
 		private List<int> extraDamage = new List<int>();
-
+		[ContextMenu("Init list")]
+		private void Awake()
+		{
+			int count = System.Enum.GetValues(typeof(BallType)).Length;
+			if (extraDamage.Count != count)
+			{
+				extraDamage = new List<int>(new int[count]);
+			}
+		}
 		public void Reset()
 		{
-			extraDamage.Clear();
+			for (int i = 0; i < extraDamage.Count; i++)
+			{
+				extraDamage[i] = 0;
+			}
 		}
 		public int GetExtraDamage(BallType type)
 		{

@@ -29,6 +29,10 @@ PrefabInstance:
       value: ExplosionBall Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: ef356303d2aacbe4f8cf85a7202f26d6, type: 2}
+    - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: OnBallHit.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

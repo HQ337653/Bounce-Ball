@@ -25,7 +25,7 @@ namespace BallzGame.Managers.Shop
        [SerializeField] private int _currentCoin;
         public Image fillImage;
 
-        public List<BallData> Balls;
+        public List<Ball> GachaBalls;
 
         public int Gacha6Price;
         public int Gacha1Price;
@@ -57,8 +57,8 @@ namespace BallzGame.Managers.Shop
 
             shopButton.onClick.AddListener(OpenShowPanel);
 
-            MainMenu.Instance.InGamePanel.ShopMultiplePull.onClick.AddListener(doGacha5);
-            MainMenu.Instance.InGamePanel.ShopOnePull.onClick.AddListener(doGacha1);
+            MainMenu.Instance.InGamePanel.ShopMultiplePull.onClick.AddListener(DoGacha5);
+            MainMenu.Instance.InGamePanel.ShopOnePull.onClick.AddListener(DoGacha1);
         }
 
         private void OpenShowPanel()
@@ -80,7 +80,7 @@ namespace BallzGame.Managers.Shop
             MainMenu.Instance.InGamePanel.ShopOnePull.interactable = CurrentCoin >= Gacha1Price;
         }
 
-        private void doGacha5()
+        private void DoGacha5()
         {
             if (CurrentCoin < Gacha6Price)
             {
@@ -95,11 +95,10 @@ namespace BallzGame.Managers.Shop
 
             for (int i = 0; i < 5; i++)
             {
-                BallData data = GetRandomBallData();
-                resultDatas.Add(data);
+                Ball ball = GetRandomBallData();
+                resultDatas.Add(ball.Data);
 
-                Ball ballPrefab = data.BallPrefab;
-                resultBalls.Add(ballPrefab);
+                resultBalls.Add(ball);
             }
 
             GameManager.Instance.launcher.AddBalls(resultBalls);
@@ -110,7 +109,7 @@ namespace BallzGame.Managers.Shop
             UpdateUI();
         }
 
-        private void doGacha1()
+        private void DoGacha1()
         {
             if (CurrentCoin < Gacha1Price)
             {
@@ -123,11 +122,10 @@ namespace BallzGame.Managers.Shop
             List<Ball> resultBalls = new List<Ball>();
             List<BallData> resultDatas = new List<BallData>();
 
-            BallData data = GetRandomBallData();
-            resultDatas.Add(data);
+            var ball = GetRandomBallData();
+            resultDatas.Add(ball.Data);
 
-            Ball ballPrefab = data.BallPrefab.GetComponent<Ball>();
-            resultBalls.Add(ballPrefab);
+            resultBalls.Add(ball);
 
             GameManager.Instance.launcher.AddBalls(resultBalls);
 
@@ -137,10 +135,10 @@ namespace BallzGame.Managers.Shop
             UpdateUI();
         }
 
-        private BallData GetRandomBallData()
+        private Ball GetRandomBallData()
         {
-            int index = Random.Range(0, Balls.Count);
-            return Balls[index];
+            int index = Random.Range(0, GachaBalls.Count);
+            return GachaBalls[index];
         }
 
         private void UpdateUI()

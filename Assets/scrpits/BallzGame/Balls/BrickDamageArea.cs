@@ -11,12 +11,13 @@ namespace BallzGame.Balls
 
 		private void Start()
 		{
-			StartCoroutine(Destory(0.05f));
+			StartCoroutine(WaitAndDisableCollider());
 		}
 
-		public IEnumerator Destory(float time)
+		public IEnumerator WaitAndDisableCollider()
 		{
-			yield return new WaitForSeconds(time);
+			yield return null;
+			yield return new WaitForFixedUpdate();
 			if (collider != null)
 				collider.enabled = false;
 		}

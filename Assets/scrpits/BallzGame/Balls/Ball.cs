@@ -9,22 +9,32 @@ namespace BallzGame.Balls
 
 	public class Ball : MonoBehaviour
 	{
-		public int BaseDamage = 1;
-		public float BaseSpeed = 1;
-		private BallLauncher launcher;
+		[SerializeField]private int BaseDamage = 1;
+
 		public UnityEvent<Brick> OnBallHit;
 		public BallExtraDamage.BallType Type;
+		public BallData Data;
+		[SerializeField]
+		private Rigidbody2D rb;
+		BallSystemConfig config;
+		private BallLauncher launcher;
+		private void Awake()
+		{
 
-		public void Init(BallLauncher l, float baseSpeed)
+			config = GameManager.Instance.BallConfig;
+		}
+		public void Init(BallLauncher l,Vector2 direction,BallSystemConfig config)
 		{
 			launcher = l;
-			BaseSpeed = baseSpeed;
+			this.config = config;
+
+
+			rb.linearVelocity = direction * GameManager.Instance.BallConfig.BallSpeed;
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
 			Brick brick = collision.gameObject.GetComponent<Brick>();
-			Rigidbody2D rb = GetComponent<Rigidbody2D>();
 			if (brick != null)
 			{
 				var damage = BaseDamage + GameManager.Instance.BallExtraDamageController.GetExtraDamage(Type);
@@ -32,11 +42,11 @@ namespace BallzGame.Balls
 				OnBallHit.Invoke(brick);
 			}
 
-			var extraTime = launcher.BouncedTime - 2;
+			var extraTime = launcher.BouncedTime - config.BounceAccelerationThreshold;
 			if (extraTime >= 0)
 			{
-				float speed = BaseSpeed + extraTime * launcher.SpeedIncrease;
-				rb.AddForce(Random.onUnitCircle * 0.1f * extraTime);
+				var speed = config.BallSpeed + extraTime * config.SpeedIncrementAfterBounce;
+				rb.AddForce(Random.onUnitCircle * config.RandomForceScale * extraTime);
 				rb.linearVelocity =
 					rb.linearVelocity.normalized * speed;
 			}
@@ -47,15 +57,19 @@ namespace BallzGame.Balls
 			if (other.CompareTag("Bottom"))
 			{
 				launcher.OnBallReturned(this);
-
-				// 如果不用对象池就销毁
 				Destroy(gameObject);
-
-				// 如果以后用对象池：
-				// gameObject.SetActive(false);
 			}
 		}
 
 	}
 
+}
+
+[System.Serializable]
+public class BallSystemConfig
+{
+	public float BounceAccelerationThreshold=2;
+	public float SpeedIncrementAfterBounce=3;
+	public float BallSpeed=13;
+	public float RandomForceScale=0.1f;
 }

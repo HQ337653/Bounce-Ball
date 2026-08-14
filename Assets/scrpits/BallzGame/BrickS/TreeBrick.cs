@@ -90,6 +90,11 @@ namespace BallzGame.Bricks.SpecialBricks
             }
         }
 
+        private void OnDestroy()
+        {
+            RemoveDefense();
+        }
+
         void RemoveDefense()
         {
             TreeIcon.gameObject.SetActive(false);
