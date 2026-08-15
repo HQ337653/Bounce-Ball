@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using BallzGame.Bricks.SpecialBricks;
 using BallzGame.Effects;
 using BallzGame.Managers;
@@ -16,7 +17,7 @@ namespace BallzGame.Bricks
         public BrickVisualEffects VisualEffect;
         public BrickPoint PointPrefab;
         public SpecialBrick SpecialBrick;
-
+        public List<BrickStatus> Status;
         void Start()
         {
             VisualEffect.UpdateHPText(Hp, OriginalHp);
@@ -118,6 +119,20 @@ namespace BallzGame.Bricks
             Hp = i;
             OriginalHp = Hp;
             VisualEffect.UpdateHPText(Hp, OriginalHp);
+        }
+        public enum BrickStatus
+        {
+            DisableEffect
+        }
+
+        public void AddStatus(BrickStatus status)
+        {
+            Status.Add(status);
+        }
+
+        public bool removeStatus(BrickStatus status)
+        {
+           return Status.Remove(status);
         }
     }
 }

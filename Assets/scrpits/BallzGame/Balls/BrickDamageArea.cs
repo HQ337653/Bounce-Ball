@@ -25,9 +25,12 @@ namespace BallzGame.Balls
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
+
 			Brick brick = other.gameObject.GetComponent<Brick>();
 			if (brick != null)
 			{
+				if(brick.Status.Contains(Brick.BrickStatus.DisableEffect))
+					return;
 				brick.TakeDamage(Damage);
 				Vector2 force=Vector2.zero;
 				if (ForceFromCenterMagnitude > -1)

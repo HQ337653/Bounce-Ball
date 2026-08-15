@@ -14,7 +14,7 @@ namespace BallzGame.Balls.SpecialBalls
 
         public void OnBallHit(Brick brick)
         {
-            if (Random.Range(0, 1) < ExplosionPossibility)
+            if (Random.Range(0, 1) < ExplosionPossibility&&!brick.Status.Contains(Brick.BrickStatus.DisableEffect))
             {
                 Instantiate(ExplosionEffectPrefab, brick.transform.position, Quaternion.identity,GameManager.Instance.BallsParent);
             }

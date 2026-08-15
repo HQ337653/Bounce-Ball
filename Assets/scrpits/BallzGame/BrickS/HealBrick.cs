@@ -92,7 +92,8 @@ namespace BallzGame.Bricks.SpecialBricks
         {
             foreach (var VARIABLE in triggers.Colliders)
             {
-
+                if(!VARIABLE)
+                    return;
                 var script = VARIABLE?.GetComponent<Brick>();
                 if (script)
                 {
