@@ -56,8 +56,10 @@ namespace BallzGame.Managers
                 ];
             game.gameObject.SetActive(true);
             yield return null;
-            game.StartGame(context, this);
-
+            game.StartGame(context, () =>
+            {
+                feverEnded = true;
+            });
 
             // 等待变量变成 true
             yield return new WaitUntil(() => feverEnded);

@@ -7,7 +7,7 @@ namespace BallzGame.Minigame
 {
 	public abstract class IFeverGame : MonoBehaviour
 	{
-		public abstract void StartGame(FeverGameContext context, FeverController source);
+		public abstract void StartGame(FeverGameContext context, Action onEnd);
 
 	}
 	public struct FeverGameContext

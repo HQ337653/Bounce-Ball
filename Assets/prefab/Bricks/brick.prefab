@@ -403,8 +403,8 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  shieldColor: {r: 0, g: 1, b: 0.84446144, a: 1}
-  normalColor: {r: 0.51572317, g: 0.51572317, b: 0.51572317, a: 1}
+  shieldColor: {r: 0.3773585, g: 0.3137534, b: 0.29785213, a: 1}
+  normalColor: {r: 0.3238992, g: 1, b: 0.95026845, a: 1}
   flash: {fileID: 8661371777735514086}
   flashSpeed: 20
   knockbackTime: 0.03
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4ed8f8907da384181d11333d1e4d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteBrightness
-  brightness: 2.31
+  brightness: 3
 --- !u!1 &6968685495403235276
 GameObject:
   m_ObjectHideFlags: 0

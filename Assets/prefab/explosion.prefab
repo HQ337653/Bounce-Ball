@@ -19690,8 +19690,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f47b0aced0bc9d4186b35d4155fce35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrickDamageArea
-  Damage: 2
-  colliders: {fileID: 670615196097947006}
+  Damage: 1
+  collider: {fileID: 670615196097947006}
+  ForceDirection: {x: 0, y: 0}
+  ForceFromCenterMagnitude: 20
 --- !u!50 &4215832464922808361
 Rigidbody2D:
   serializedVersion: 5

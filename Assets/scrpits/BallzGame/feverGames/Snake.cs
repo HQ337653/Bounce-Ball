@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using BallzGame.Bricks;
 using BallzGame.Managers;
@@ -6,11 +7,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace BallzGame.Minigame
 {
     public class Snake : IFeverGame
     {
+        private Action onEnd;
         public SnakeController snake;
 
         private FeverGameContext context;
@@ -25,16 +28,15 @@ namespace BallzGame.Minigame
         private int hpThreshold;
 
         public Gradient TimerColor;
-        private FeverController Source;
         public GameObject background;
         public GameObject[] EdgeWalls;
         public TextMeshProUGUI TimerText;
         public Image TimerImage;
         public int GameMaxTime = 10;
 
-        public override void StartGame(FeverGameContext context, FeverController source)
+        public override void StartGame(FeverGameContext context, Action onEnd)
         {
-            Source = source;
+            this.onEnd = onEnd;
             Debug.Log("Starting Snake Game");
 
             gameObject.SetActive(true);
@@ -578,7 +580,7 @@ namespace BallzGame.Minigame
                 snake.Stop();
             }
 
-            Source.FeverEnd();
+            onEnd?.Invoke();
             EndGameCoroutine = null;
             gameObject.SetActive(false);
         }

@@ -452,7 +452,7 @@ GameObject:
   - component: {fileID: 65139760}
   - component: {fileID: 65139759}
   m_Layer: 5
-  m_Name: pull10
+  m_Name: pull6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3122,9 +3122,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'pull Ten
+  m_text: 'pull Six
 
-    80'
+    50'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45a53c39c83eef7449756c4ea0f056fe, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 45a53c39c83eef7449756c4ea0f056fe, type: 2}
@@ -6364,7 +6364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000076293945, y: 13.494}
+  m_AnchoredPosition: {x: 0, y: 13.493988}
   m_SizeDelta: {x: 0, y: -26.988}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &817275340
@@ -7317,10 +7317,10 @@ RectTransform:
   - {fileID: 775385145}
   m_Father: {fileID: 1821135583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -86.7, y: -422.57495}
-  m_SizeDelta: {x: 118.0086, y: 73.7394}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 313.3, y: 63.42505}
+  m_SizeDelta: {x: 118.008606, y: 73.73941}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1049368924
 MonoBehaviour:
@@ -8847,14 +8847,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopController
   _currentCoin: 300
   fillImage: {fileID: 1783445165}
-  Balls:
-  - {fileID: 11400000, guid: ef356303d2aacbe4f8cf85a7202f26d6, type: 2}
-  - {fileID: 11400000, guid: 050fa41de01b07b4ab3758d6f5f63756, type: 2}
-  Gacha6Price: 80
+  GachaBalls:
+  - Ball: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
+    Probability: 90
+  - Ball: {fileID: 3025876293728031331, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
+    Probability: 10
+  Gacha6Price: 50
   Gacha1Price: 10
   GoldText: {fileID: 837349558}
   Items:
-  - {fileID: 2443170513983730085, guid: 87d620c1efa54fa43b615a581b354266, type: 3}
+  - Item: {fileID: 2443170513983730085, guid: 87d620c1efa54fa43b615a581b354266, type: 3}
+    Probability: 100
   shopButton: {fileID: 617341607}
 --- !u!1 &1350876415
 GameObject:
@@ -9668,13 +9671,18 @@ MonoBehaviour:
   BricksParent: {fileID: 1950535845}
   BallsParent: {fileID: 152455810}
   VisualEffectsParent: {fileID: 1255334825}
+  BrickPointTarget: {fileID: 896120313}
+  MainCamera: {fileID: 519420031}
   width: 9
   height: 13
   level: 1
-  Dofever: 0
   state: 0
-  BrickPointTarget: {fileID: 896120313}
-  MainCamera: {fileID: 519420031}
+  BallConfig:
+    BounceAccelerationThreshold: 2
+    SpeedIncrementAfterBounce: 3
+    BallSpeed: 13
+    RandomForceScale: 0.1
+    ShootInterval: 0.1
 --- !u!1 &1486964316
 GameObject:
   m_ObjectHideFlags: 0
@@ -17871,13 +17879,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallLauncher
   ballPrefabs:
-  - {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
-  InitialBall: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
-  shootInterval: 0.1
-  speed: 13
-  Clickable: {fileID: 405650460}
-  BouncedTime: 0
-  SpeedIncrease: 3
+  - {fileID: 3025876293728031331, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
+  InitialBall: {fileID: 3025876293728031331, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
+  ElapsedTimeSinceLaunch: 0
+  clickableArea: {fileID: 405650460}
+  HasInput: 0
 --- !u!212 &2114076606
 SpriteRenderer:
   serializedVersion: 2
@@ -17988,10 +17994,10 @@ RectTransform:
   - {fileID: 617341606}
   m_Father: {fileID: 1821135583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 181, y: -442}
-  m_SizeDelta: {x: 1.8, y: 1.024}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -219, y: 44}
+  m_SizeDelta: {x: 1.7999878, y: 1.0239868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2118294329
 MonoBehaviour:

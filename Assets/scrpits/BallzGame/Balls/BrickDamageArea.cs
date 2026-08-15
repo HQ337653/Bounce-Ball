@@ -8,7 +8,8 @@ namespace BallzGame.Balls
 	{
 		public int Damage;
 		[SerializeField] private Collider2D collider;
-
+		[SerializeField] private Vector2 ForceDirection;
+		[SerializeField] private float ForceFromCenterMagnitude;
 		private void Start()
 		{
 			StartCoroutine(WaitAndDisableCollider());
@@ -27,6 +28,21 @@ namespace BallzGame.Balls
 			Brick brick = other.gameObject.GetComponent<Brick>();
 			if (brick != null)
 			{
+				brick.TakeDamage(Damage);
+				Vector2 force=Vector2.zero;
+				if (ForceFromCenterMagnitude > -1)
+				{
+					Vector2 forceDirection = gameObject.transform.position - other.transform.position;
+					forceDirection.Normalize();
+					forceDirection=new Vector2(-forceDirection.x,forceDirection.y);
+					force= forceDirection * ForceFromCenterMagnitude;
+					brick.TakeDamage(Damage,force);
+				}
+				else if(ForceDirection != Vector2.zero)
+				{
+					force = ForceDirection;
+					brick.TakeDamage(Damage,force);
+				}
 				brick.TakeDamage(Damage);
 			}
 
