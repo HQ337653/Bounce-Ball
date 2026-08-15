@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using BallzGame.Minigame;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace BallzGame.Managers
@@ -15,16 +13,14 @@ namespace BallzGame.Managers
         public int CurrentFever;
         public int MaxFever;
         public Button FeverButton;
-
         public void Reset()
         {
             CurrentFever = 0;
             FeverFill.fillAmount = 0;
             FeverButton.interactable = false;
-        }
-        public FeverController(List<IFeverGame> feverGameContexts)
-        {
-            FeverGames = feverGameContexts;
+            FeverClicked = false;
+            feverEnded = false;
+            AddFeverPoints(0);
         }
 
         public bool AddFeverPoints(int amount)
@@ -33,11 +29,11 @@ namespace BallzGame.Managers
             FeverFill.fillAmount = (float)CurrentFever / MaxFever;
             if (CurrentFever >= MaxFever)
             {
-                FeverButton.interactable = true;
+                CurrentFever = MaxFever;
                 return true;
-            }
 
-            FeverButton.interactable = false;
+
+            }
 
             return false;
         }
@@ -45,25 +41,27 @@ namespace BallzGame.Managers
         public IEnumerator StartFeverGame(FeverGameContext context)
         {
             feverEnded = false;
+            CurrentFever = 0;
+            FeverFill.fillAmount = 0;
             Debug.Log("Starting Fever Game");
-            gameObject.SetActive(true);
             if (FeverGames.Count == 0)
                 yield break;
 
             IFeverGame game =
                 FeverGames[
-                    UnityEngine.Random.Range(
+                    Random.Range(
                         0,
                         FeverGames.Count
                     )
                 ];
+            game.gameObject.SetActive(true);
+            yield return null;
             game.StartGame(context, this);
 
 
             // 等待变量变成 true
             yield return new WaitUntil(() => feverEnded);
 
-            gameObject.SetActive(false);
             Debug.Log("Fever Manager Game Ended");
         }
 
@@ -86,6 +84,21 @@ namespace BallzGame.Managers
         }
 
         public bool FeverClicked;
+
+        public void WaitForInput()
+        {
+            FeverClicked=false;
+            if (CurrentFever >= MaxFever)
+            {
+                FeverButton.interactable = true;
+            }
+        }
+
+        public void StopListenToInput()
+        {
+            FeverClicked=false;
+            FeverButton.interactable = false;
+        }
     }
 
 

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using BallzGame.Balls;
@@ -12,20 +11,11 @@ namespace BallzGame.Managers
     {
         public List<Ball> ballPrefabs;
         public Ball InitialBall;
-
-        public float shootInterval = 0.1f;
-
-
-        public EventTrigger Clickable;
-
+        public float ElapsedTimeSinceLaunch ;
+        [SerializeField]private EventTrigger clickableArea;
         int activeBalls;
-
-        public float BouncedTime;
-
         private Coroutine timer;
-
-        // ✅ 新增：输入缓存
-        private bool hasInput;
+        public bool HasInput;
         private Vector2 inputTarget;
 
         private void Awake()
@@ -36,10 +26,10 @@ namespace BallzGame.Managers
         // ✅ 自动绑定 EventTrigger（PointerUp）
         void SetupEventTrigger()
         {
-            if (Clickable == null)
+            if (clickableArea == null)
                 return;
 
-            Clickable.triggers.Clear();
+            clickableArea.triggers.Clear();
 
             var entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerUp;
@@ -48,12 +38,13 @@ namespace BallzGame.Managers
                 OnRelease();
             });
 
-            Clickable.triggers.Add(entry);
+            clickableArea.triggers.Add(entry);
         }
 
         // ✅ 替代鼠标点击的方法（松手触发）
         public void OnRelease()
         {
+            Debug.Log("On Release");
             Vector2 worldPos = Camera.main.ScreenToWorldPoint(
                 Mouse.current.position.ReadValue()
             );
@@ -62,58 +53,36 @@ namespace BallzGame.Managers
             if (worldPos.y >= transform.position.y + 0.02f)
             {
                 inputTarget = worldPos;
-                hasInput = true;
+                HasInput = true;
             }
         }
 
         public IEnumerator BounceTimer()
         {
-            BouncedTime = 0;
+            ElapsedTimeSinceLaunch  = 0;
             while (true)
             {
-                BouncedTime += Time.fixedDeltaTime;
+                ElapsedTimeSinceLaunch  += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
         }
 
-        // GameManager 调用
-        public IEnumerator StartWaitForInput()
+        private Coroutine waitforinput;
+        public void WaitForInput()
         {
-
-            hasInput = false;
-
-            // ✅ 等待 EventTrigger 输入
-            while (!hasInput)
-            {
-                if (GameManager.Instance.feverController.FeverClicked)
-                {
-                    GameManager.Instance.feverController.FeverClicked = false;
-
-                    GameManager.Instance.Dofever = true;
-                    yield break;
-                }
-
-                yield return null;
-            }
-
-            Vector2 target = inputTarget;
-
-            timer = StartCoroutine(BounceTimer());
-
-            // 开始发球
-            yield return StartCoroutine(ShootRoutine(target));
-
-            // 等所有球回来
-            while (activeBalls > 0)
-            {
-                yield return null;
-            }
-
-            StopCoroutine(timer);
+            HasInput = false;
         }
 
-        IEnumerator ShootRoutine(Vector2 target)
+        public void StopListenToInput()
         {
+            HasInput = false;
+        }
+
+
+        public IEnumerator Launch()
+        {
+           var target=inputTarget;
+            timer = StartCoroutine(BounceTimer());
             Transform parent = GameManager.Instance.BallsParent;
             Vector2 dir =
                 (target - (Vector2)transform.position).normalized;
@@ -135,8 +104,14 @@ namespace BallzGame.Managers
 
 
 
-                yield return new WaitForSeconds(shootInterval);
+                yield return new WaitForSeconds(GameManager.Instance.BallConfig.ShootInterval);
             }
+            while (activeBalls > 0)
+            {
+                yield return null;
+            }
+
+            StopCoroutine(timer);
         }
 
         public void OnBallReturned(Ball ball)
@@ -170,10 +145,13 @@ namespace BallzGame.Managers
             StopAllCoroutines();
 
             activeBalls = 0;
-            BouncedTime = 0f;
+            ElapsedTimeSinceLaunch = 0f;
 
-            hasInput = false;
+            HasInput = false;
         }
+
+
+
     }
 }
 

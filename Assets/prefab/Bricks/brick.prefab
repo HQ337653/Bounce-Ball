@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Brick
   Hp: 3
-  DefensePoint: 0
+  DefencePoint: 0
   OriginalHp: 0
   VisualEffect: {fileID: 6066573623839633467}
   PointPrefab: {fileID: 5426102367861583924, guid: ea2993bf67fdd23419e8df9ac1b48ab0, type: 3}
@@ -369,25 +369,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27e49134d4ea5240aedd8fbaa2ab5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrickEffects
-  Flash: {fileID: 8661371777735514086}
-  flashSpeed: 20
-  effectPrefab: {fileID: 8448865817493986001, guid: 70218577a8313cf40bf03c85bd711cab, type: 3}
-  knockbackTime: 0.03
-  returnTime: 0.1
-  knockbackMultiplier: 0.02
+  brickVisual: {fileID: 4689929527597573691}
+  centerSprite: {fileID: 4629431560487495573}
+  outline: {fileID: 4692555174574787316}
+  hpText: {fileID: 5607739550677265870}
   colors:
     serializedVersion: 2
     key0: {r: 0.022855742, g: 0.84276724, b: 0, a: 1}
-    key1: {r: 0.6037736, g: 0, b: 0.57227945, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
+    key1: {r: 0.09920486, g: 0.5388057, b: 0.55345905, a: 1}
+    key2: {r: 0.6037736, g: 0, b: 0.57227945, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 65535
-    ctime2: 0
+    ctime1: 36494
+    ctime2: 65535
     ctime3: 0
     ctime4: 0
     ctime5: 0
@@ -403,14 +401,16 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_ColorSpace: -1
-    m_NumColorKeys: 2
+    m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  centerSprite: {fileID: 4629431560487495573}
   shieldColor: {r: 0, g: 1, b: 0.84446144, a: 1}
   normalColor: {r: 0.51572317, g: 0.51572317, b: 0.51572317, a: 1}
-  outline: {fileID: 4692555174574787316}
-  hpText: {fileID: 5607739550677265870}
-  brickVisual: {fileID: 4689929527597573691}
+  flash: {fileID: 8661371777735514086}
+  flashSpeed: 20
+  knockbackTime: 0.03
+  returnTime: 0.1
+  knockbackMultiplier: 0.02
+  effectPrefab: {fileID: 8448865817493986001, guid: 70218577a8313cf40bf03c85bd711cab, type: 3}
   floatTextPrefab: {fileID: 5088382841924657231, guid: 70a9b49be27104c4ab1a6f7f54a360d6, type: 3}
 --- !u!1 &5521147720290536474
 GameObject:

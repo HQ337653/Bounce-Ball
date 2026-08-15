@@ -57,7 +57,7 @@ namespace BallzGame.Managers.Shop
 
             shopButton.onClick.AddListener(OpenShowPanel);
 
-            MainMenu.Instance.InGamePanel.ShopMultiplePull.onClick.AddListener(DoGacha5);
+            MainMenu.Instance.InGamePanel.ShopMultiplePull.onClick.AddListener(DoGacha6);
             MainMenu.Instance.InGamePanel.ShopOnePull.onClick.AddListener(DoGacha1);
         }
 
@@ -80,7 +80,7 @@ namespace BallzGame.Managers.Shop
             MainMenu.Instance.InGamePanel.ShopOnePull.interactable = CurrentCoin >= Gacha1Price;
         }
 
-        private void DoGacha5()
+        private void DoGacha6()
         {
             if (CurrentCoin < Gacha6Price)
             {
@@ -93,7 +93,7 @@ namespace BallzGame.Managers.Shop
             List<Ball> resultBalls = new List<Ball>();
             List<BallData> resultDatas = new List<BallData>();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Ball ball = GetRandomBallData();
                 resultDatas.Add(ball.Data);

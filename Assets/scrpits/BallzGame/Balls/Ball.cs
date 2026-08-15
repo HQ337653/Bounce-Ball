@@ -42,7 +42,7 @@ namespace BallzGame.Balls
 				OnBallHit.Invoke(brick);
 			}
 
-			var extraTime = launcher.BouncedTime - config.BounceAccelerationThreshold;
+			var extraTime = launcher.ElapsedTimeSinceLaunch - config.BounceAccelerationThreshold;
 			if (extraTime >= 0)
 			{
 				var speed = config.BallSpeed + extraTime * config.SpeedIncrementAfterBounce;
@@ -72,4 +72,5 @@ public class BallSystemConfig
 	public float SpeedIncrementAfterBounce=3;
 	public float BallSpeed=13;
 	public float RandomForceScale=0.1f;
+	public float ShootInterval = 0.1f;
 }

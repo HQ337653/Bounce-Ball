@@ -89,8 +89,6 @@ namespace GameMeta
 
 					// 加入背包
 					GameManager.Instance.inventory.AddItemToInventory(data);
-
-					Debug.Log("购买：" + data.name);
 				});
 			}
 		}

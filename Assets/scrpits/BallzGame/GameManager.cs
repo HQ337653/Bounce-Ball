@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using BallzGame.Balls;
 using BallzGame.Bricks;
@@ -40,7 +39,6 @@ namespace BallzGame.Managers
         [Header("current game status")]
         public Brick[,] grid;
         public int level = 1;
-        public bool Dofever;
         public State state;
         public GameResultPanel.GameResult CurrentResult;
         [Header("Configs")]
@@ -51,114 +49,106 @@ namespace BallzGame.Managers
             {
                 Instance = FindAnyObjectByType<GameManager>();
             }
+            var gamePanel = MainMenu.Instance.InGamePanel;
+            gamePanel.DieSubPanelConfirmButton.onClick.AddListener(BackToMainMenuButtonClicked);
         }
         public void NewGame()
         {
+            ResetAllController();
+            if (gameLoop!=null)
+            {
+                StopCoroutine(gameLoop);
+            }
             MainMenu.Instance.Goto(MainMenu.CurrentPanel.InGame);
             CurrentResult=new();
             grid = new Brick[width, height];
-
-            StartCoroutine(GameLoop());
-        }
-        private FeverGameContext GetContext()
-        {
-            var context = new FeverGameContext();
-            context.CurrentLevel = level;
-            context.Grid = grid;
-            return context;
+            gameLoop=StartCoroutine(GameLoop());
         }
 
+        private Coroutine gameLoop;
         IEnumerator GameLoop()
         {
+            state = State.TrySpawnRow;
             while (true)
             {
                 switch (state)
                 {
-
-                    case State.GameOver:
-                        GameOver();
-                        yield break;
-
-                    case State.Fever:
-                        NotifyBricksMiniGameStart();
-                        yield return StartCoroutine(
-                            feverController.StartFeverGame(GetContext())
-                        );
-                        NotifyBricksMiniGameEnd();
-
-                        state = State.WaitForInputAndComeback;
-                        break;
-
-                    case State.SpawnRow:
-                        SpawnRowState();
-
-                        state = State.WaitForInputAndComeback;
-                        break;
-
-                    case State.WaitForInputAndComeback:
+                    case State.WaitForFeverOrLaunchInput:
                         shopController.RefreshShopItems();
-                        yield return StartCoroutine(
-                            launcher.StartWaitForInput()
-                        );
-
-                        level++;
-                        if (Dofever)
+                        launcher.WaitForInput();
+                        feverController.WaitForInput();
+                        yield return new WaitUntil(() => launcher.HasInput || feverController.FeverClicked);
+                        if (launcher.HasInput)
+                        {
+                            state = State.ShootBall;
+                        }
+                        else
                         {
                             state = State.Fever;
-                            Dofever = false;
-                            break;
                         }
+                        feverController.StopListenToInput();
+                        launcher.StopListenToInput();
+                        break;
+                    case State.ShootBall:
+                        yield return new WaitForEndOfFrame();
+                        yield return StartCoroutine( launcher.Launch() );
+                        state = State.TrySpawnRow;
+                        break;
+                    case State.Fever:
+                        NotifyBricksMiniGameStart();
+                        yield return StartCoroutine(feverController.StartFeverGame(GetContext()));
+                        NotifyBricksMiniGameEnd();
+                        state = State.WaitForFeverOrLaunchInput;
+                        break;
+                    case State.TrySpawnRow:
+                        level++;
+                        bool gameOver = !TryMoveBricksDown();
 
-                        bool isGameOver = MoveBricksDown();
-
-                        if (isGameOver)
+                        if (gameOver)
                         {
                             state = State.GameOver;
                         }
                         else
                         {
-                            state = State.SpawnRow;
+                            SpawnTopRow();
+                            state = State.WaitForFeverOrLaunchInput;
                         }
-
                         break;
+                    case State.GameOver:
+                        MainMenu.Instance.InGamePanel.DieSubPanel.SetActive(true);
+                        yield break;
+
                 }
 
                 yield return null;
             }
         }
 
-        private void GameOver()
-        {
-            var gamePanel = MainMenu.Instance.InGamePanel;
-            gamePanel.DieSubPanel.SetActive(true);
-            gamePanel.DieSubPanelConfirmButton.onClick.AddListener(BackToMainMenu);
 
-            void BackToMainMenu()
+
+        void BackToMainMenuButtonClicked()
+        {
+            if (state == State.GameOver)
             {
                 CurrentResult.BallsCount  = launcher.ballPrefabs.Count;
-
-
                 level = 1;
-                Dofever = false;
-                state = State.SpawnRow;
-                ClearBricks();
-                gamePanel.DieSubPanel.SetActive(false);
-                gamePanel.DieSubPanelConfirmButton.onClick.RemoveListener(BackToMainMenu);
-
+                ClearAllBricks();
+                MainMenu.Instance.InGamePanel.DieSubPanel.SetActive(false);
                 MainMenu.Instance.GameResultPanel.SetResult(CurrentResult);
                 MainMenu.Instance.Goto(MainMenu.CurrentPanel.GameResult);
+                ResetAllController();
             }
         }
+
 
         private void ResetAllController()
         {
             feverController.Reset();
             launcher.Reset();
             BallExtraDamageController.Reset();
-            ClearBricks();
         }
 
-        void ClearBricks()
+        void ClearAllBricks()
         {
             if (grid == null)
                 return;
@@ -179,7 +169,7 @@ namespace BallzGame.Managers
         }
 
 
-        void SpawnRowState()
+        void SpawnTopRow()
         {
             var bricks = spawner.SpawnRow(level, width);
 
@@ -196,20 +186,18 @@ namespace BallzGame.Managers
             }
         }
 
-        public void SetBrick(int x, int y, Brick brick)
+
+
+
+        bool TryMoveBricksDown()
         {
-            grid[x, y] = brick;
-        }
-
-
-
-        bool MoveBricksDown()
-        {
+            bool StillHaveSpace;
             for (int x = 0; x < width; x++)
             {
-                if (grid[x, height - 1] != null)
+                if (grid[x, height - 1])
                 {
-                    return true; // GameOver
+                    StillHaveSpace = false;
+                    return StillHaveSpace;
                 }
             }
 
@@ -232,7 +220,8 @@ namespace BallzGame.Managers
                 }
             }
 
-            return false;
+            StillHaveSpace = true;
+            return StillHaveSpace;
         }
 
         void NotifyBricksMiniGameStart()
@@ -241,7 +230,7 @@ namespace BallzGame.Managers
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if (grid[x, y] != null)
+                    if (grid[x, y])
                     {
                         grid[x, y].OnMiniGameStart();
                     }
@@ -263,9 +252,17 @@ namespace BallzGame.Managers
                 }
             }
         }
+        private FeverGameContext GetContext()
+        {
+            var context = new FeverGameContext();
+            context.CurrentLevel = level;
+            context.Grid = grid;
+            return context;
+        }
+
 
         [ContextMenu("Print Grid")]
-        public void PrintGrid()
+        private void PrintGrid()
         {
             int w = grid.GetLength(0);
             int h = grid.GetLength(1);
@@ -291,13 +288,14 @@ namespace BallzGame.Managers
 
             Debug.Log(result);
         }
-
-    }public enum State
-    {
-        SpawnRow,
-        WaitForInputAndComeback,
-        Fever,
-        GameOver
+        public enum State
+        {
+            TrySpawnRow,
+            WaitForFeverOrLaunchInput,
+            Fever,
+            GameOver,
+            ShootBall,
+        }
     }
 
 
