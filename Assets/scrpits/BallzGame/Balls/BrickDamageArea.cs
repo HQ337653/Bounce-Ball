@@ -1,8 +1,11 @@
-using System;
 using System.Collections;
 using BallzGame.Bricks;
+using BallzGame.Managers;
 using UnityEngine;
-namespace BallzGame.Balls
+using Utils;
+
+
+namespace BallzGame.Balls.SpecialBalls
 {
 	public class BrickDamageArea : MonoBehaviour
 	{
@@ -10,17 +13,30 @@ namespace BallzGame.Balls
 		[SerializeField] private Collider2D collider;
 		[SerializeField] private Vector2 ForceDirection;
 		[SerializeField] private float ForceFromCenterMagnitude;
+		public float DestroyAfter=-1;
 		private void Start()
 		{
 			StartCoroutine(WaitAndDisableCollider());
+			if (DestroyAfter > 0)
+			{
+				StartCoroutine(DestroyGameObject());
+			}
 		}
-
+		public IEnumerator DestroyGameObject()
+		{
+			yield return new WaitForSeconds(DestroyAfter);
+			Destroy(gameObject);
+		}
 		public IEnumerator WaitAndDisableCollider()
 		{
 			yield return null;
 			yield return new WaitForFixedUpdate();
 			if (collider != null)
 				collider.enabled = false;
+		}
+		private void Reset()
+		{
+			collider = GetComponent<Collider2D>();
 		}
 
 		private void OnTriggerEnter2D(Collider2D other)
@@ -29,15 +45,17 @@ namespace BallzGame.Balls
 			Brick brick = other.gameObject.GetComponent<Brick>();
 			if (brick != null)
 			{
-				if(brick.Status.Contains(Brick.BrickStatus.DisableEffect))
-					return;
-				brick.TakeDamage(Damage);
-				Vector2 force=Vector2.zero;
-				if (ForceFromCenterMagnitude > -1)
+				if (brick.Status.Contains(Brick.BrickStatus.DisableEffect))
 				{
-					Vector2 forceDirection = gameObject.transform.position - other.transform.position;
+					GameManager.DoVoidFloatText(brick.transform.position);
+					return;
+				}
+
+				Vector2 force=Vector2.zero;
+				if (ForceFromCenterMagnitude > 0)
+				{
+					Vector2 forceDirection = other.transform.position - gameObject.transform.position;
 					forceDirection.Normalize();
-					forceDirection=new Vector2(-forceDirection.x,forceDirection.y);
 					force= forceDirection * ForceFromCenterMagnitude;
 					brick.TakeDamage(Damage,force);
 				}
@@ -46,7 +64,10 @@ namespace BallzGame.Balls
 					force = ForceDirection;
 					brick.TakeDamage(Damage,force);
 				}
-				brick.TakeDamage(Damage);
+				else
+				{
+					brick.TakeDamage(Damage);
+				}
 			}
 
 		}

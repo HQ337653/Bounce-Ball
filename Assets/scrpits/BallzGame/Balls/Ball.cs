@@ -38,7 +38,8 @@ namespace BallzGame.Balls
 			if (brick != null)
 			{
 				var damage = BaseDamage + GameManager.Instance.BallExtraDamageController.GetExtraDamage(Type);
-				brick.TakeDamage(damage, rb.linearVelocity);
+				var direction=brick.transform.position-transform.position;
+				brick.TakeDamage(damage, rb.linearVelocity.magnitude*direction);
 				OnBallHit.Invoke(brick);
 			}
 

@@ -6,6 +6,7 @@ using BallzGame.Managers.Shop;
 using BallzGame.Minigame;
 using GameMeta;
 using UnityEngine;
+using Utils;
 
 namespace BallzGame.Managers
 {
@@ -43,6 +44,41 @@ namespace BallzGame.Managers
         public GameResultPanel.GameResult CurrentResult;
         [Header("Configs")]
         public BallSystemConfig BallConfig;
+
+        [SerializeField]private FloatText floatText;
+
+        public static void DoVoidFloatText(Vector3 pos)
+        {
+
+            var floatTextPrefab = Instance.floatText;
+            var   content = BlackHoleBrick.EffectFloatText;
+            if (floatTextPrefab != null)
+            {
+                Vector3 spawnPos = pos;
+
+                // 👉 稍微抬高一点避免重叠
+                spawnPos += Vector3.up * 0.2f;
+
+                // 👉 随机一点方向（更自然）
+                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
+
+                // 👉 实例化
+                FloatText ft = Instantiate(
+                    floatTextPrefab,
+                    spawnPos,
+                    Quaternion.identity
+                );
+
+                // 👉 颜色可以自己调（这里红色伤害）
+                ft.DoFloatText(
+                    content,
+                    spawnPos,
+                    Color.red,
+                    dir,
+                    0.8f
+                );
+            }
+        }
         private void Awake()
         {
             if (Instance == null)

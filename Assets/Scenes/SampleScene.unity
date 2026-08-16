@@ -7436,7 +7436,7 @@ MonoBehaviour:
   BrickPrefabs:
   - Brick: {fileID: 4807591381792186049, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
     Probability: 96
-  - Brick: {fileID: 981017347653560021, guid: 766f13956c8c18a4489f92d625b66211, type: 3}
+  - Brick: {fileID: 4858775835200693727, guid: c22fa82476dbbf848ad6129ebdda5874, type: 3}
     Probability: 2
   - Brick: {fileID: 2631867187219053848, guid: d92a5665570f7264b9ea4f8bf58fe884, type: 3}
     Probability: 2
@@ -8849,9 +8849,15 @@ MonoBehaviour:
   fillImage: {fileID: 1783445165}
   GachaBalls:
   - Ball: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
-    Probability: 90
+    Probability: 92
   - Ball: {fileID: 3025876293728031331, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
-    Probability: 10
+    Probability: 2
+  - Ball: {fileID: 3170251195751001192, guid: 774b590a17d9d034ca5f89a26c29c930, type: 3}
+    Probability: 2
+  - Ball: {fileID: 195725791942427977, guid: 80ef46fa9e0a3694a8062b6531b8812f, type: 3}
+    Probability: 2
+  - Ball: {fileID: 2904686278534378089, guid: 3ef16e5b0267c2540b75db0c74f4cd23, type: 3}
+    Probability: 2
   Gacha6Price: 50
   Gacha1Price: 10
   GoldText: {fileID: 837349558}
@@ -17879,8 +17885,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallLauncher
   ballPrefabs:
-  - {fileID: 3025876293728031331, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
-  InitialBall: {fileID: 3025876293728031331, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
+  - {fileID: 2904686278534378089, guid: 3ef16e5b0267c2540b75db0c74f4cd23, type: 3}
+  InitialBall: {fileID: 2904686278534378089, guid: 3ef16e5b0267c2540b75db0c74f4cd23, type: 3}
   ElapsedTimeSinceLaunch: 0
   clickableArea: {fileID: 405650460}
   HasInput: 0
@@ -18042,7 +18048,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 996895982}
-  - {fileID: 229538208}
   - {fileID: 1479581615}
+  - {fileID: 229538208}
   - {fileID: 519420032}
   - {fileID: 159995702}

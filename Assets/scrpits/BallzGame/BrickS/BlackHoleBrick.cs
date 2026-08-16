@@ -7,6 +7,7 @@ using Utils;
 
 public class BlackHoleBrick : SpecialBrick
     {
+        public static string EffectFloatText = "BLOCK!";
         [SerializeField]private SpriteRenderer BlackholeSprite;
         [SerializeField]private TriggerCollector triggers;
         public List<Brick> SurroundingBricks = new List<Brick>();
@@ -77,7 +78,8 @@ public class BlackHoleBrick : SpecialBrick
 
             foreach (var VARIABLE in triggers.Colliders)
             {
-
+                if(!VARIABLE)
+                    return;
                 var script = VARIABLE?.GetComponent<Brick>();
                 if (script)
                 {

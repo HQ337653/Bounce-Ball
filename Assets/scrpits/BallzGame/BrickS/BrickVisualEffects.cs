@@ -70,7 +70,6 @@ namespace BallzGame.Bricks
             outline.color = shield ? shieldColor : normalColor;
         }
 
-        [ContextMenu("hit")]
         public void DoHit(Vector2 force)
         {
             // Flash
@@ -111,8 +110,7 @@ namespace BallzGame.Bricks
         private IEnumerator KnockbackEffect(Vector2 force)
         {
             Vector3 startPos = Vector3.zero;
-            Vector2 direction = new Vector2(force.x, -force.y);
-            Vector3 targetPos = startPos + (Vector3)direction * knockbackMultiplier;
+            Vector3 targetPos = startPos + (Vector3)force * knockbackMultiplier;
 
             transform.localPosition = startPos;
             float timer = 0f;
