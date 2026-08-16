@@ -26,7 +26,6 @@ namespace BallzGame.Bricks
         [SerializeField]private float knockbackMultiplier;
         [Header("Visual effect prefabs")]
 		[FormerlySerializedAs("EffectPrefab")] [SerializeField] private ParticleSystem effectPrefab;
-        [FormerlySerializedAs("FloatTextPrefab")] [SerializeField]private FloatText floatTextPrefab;
 
         private Coroutine flashCoroutine;
         private Coroutine knockbackCoroutine;
@@ -53,13 +52,7 @@ namespace BallzGame.Bricks
         /// </summary>
         public void ShowFloatText(Vector3 pos, int val)
         {
-            if (floatTextPrefab != null)
-            {
-                Vector3 spawnPos = pos + Vector3.up * 0.2f;
-                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
-                FloatText ft = Instantiate(floatTextPrefab, spawnPos, Quaternion.identity);
-                ft.DoFloatText(-val, spawnPos, Color.white, dir);
-            }
+            GameManager.DoShieldText(pos,val);
         }
 
         // ---------- 原有方法（微调） ----------

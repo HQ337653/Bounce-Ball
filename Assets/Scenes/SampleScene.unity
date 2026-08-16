@@ -8849,15 +8849,15 @@ MonoBehaviour:
   fillImage: {fileID: 1783445165}
   GachaBalls:
   - Ball: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
-    Probability: 92
+    Probability: 71
   - Ball: {fileID: 3025876293728031331, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
-    Probability: 2
+    Probability: 7
   - Ball: {fileID: 3170251195751001192, guid: 774b590a17d9d034ca5f89a26c29c930, type: 3}
-    Probability: 2
+    Probability: 7
   - Ball: {fileID: 195725791942427977, guid: 80ef46fa9e0a3694a8062b6531b8812f, type: 3}
-    Probability: 2
+    Probability: 7
   - Ball: {fileID: 2904686278534378089, guid: 3ef16e5b0267c2540b75db0c74f4cd23, type: 3}
-    Probability: 2
+    Probability: 7
   Gacha6Price: 50
   Gacha1Price: 10
   GoldText: {fileID: 837349558}
@@ -9689,6 +9689,10 @@ MonoBehaviour:
     BallSpeed: 13
     RandomForceScale: 0.1
     ShootInterval: 0.1
+  blockFloatText: {fileID: 3580670351091571146, guid: a33557f635fb5b0489548483f80cabcd, type: 3}
+  brickHealFloatText: {fileID: 5088382841924657231, guid: 70a9b49be27104c4ab1a6f7f54a360d6, type: 3}
+  brickShieldFloatText: {fileID: 5088382841924657231, guid: 70a9b49be27104c4ab1a6f7f54a360d6, type: 3}
+  brickDamageFloatText: {fileID: 5088382841924657231, guid: 70a9b49be27104c4ab1a6f7f54a360d6, type: 3}
 --- !u!1 &1486964316
 GameObject:
   m_ObjectHideFlags: 0
@@ -17885,8 +17889,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallLauncher
   ballPrefabs:
-  - {fileID: 2904686278534378089, guid: 3ef16e5b0267c2540b75db0c74f4cd23, type: 3}
-  InitialBall: {fileID: 2904686278534378089, guid: 3ef16e5b0267c2540b75db0c74f4cd23, type: 3}
+  - {fileID: 3170251195751001192, guid: 774b590a17d9d034ca5f89a26c29c930, type: 3}
+  InitialBall: {fileID: 3170251195751001192, guid: 774b590a17d9d034ca5f89a26c29c930, type: 3}
   ElapsedTimeSinceLaunch: 0
   clickableArea: {fileID: 405650460}
   HasInput: 0
@@ -18047,8 +18051,8 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 996895982}
   - {fileID: 1479581615}
+  - {fileID: 996895982}
   - {fileID: 229538208}
   - {fileID: 519420032}
   - {fileID: 159995702}

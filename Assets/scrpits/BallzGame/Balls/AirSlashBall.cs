@@ -17,7 +17,7 @@ public class AirSlashBall : MonoBehaviour
 		{
 			if (brick.Status.Contains(Brick.BrickStatus.DisableEffect))
 			{
-				GameManager.DoVoidFloatText(brick.transform.position);
+				GameManager.DoBlockFloatText(brick.transform.position);
 				return;
 			}
 			var obj = Instantiate(

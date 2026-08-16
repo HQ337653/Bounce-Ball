@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 4926651560861329192}
   - {fileID: 3463463907314650355}
-  m_Father: {fileID: 8453646964857639979}
+  m_Father: {fileID: 2293070915730078180}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &298664529007961322
 MonoBehaviour:
@@ -353,7 +353,7 @@ Transform:
   m_LocalScale: {x: 0.26, y: 0.26, z: 0.099999994}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 8453646964857639979}
+  m_Father: {fileID: 2293070915730078180}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &8127645328415441938
 ParticleSystem:
@@ -5319,16 +5319,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8397888542792380213, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 2164181774531199738, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 911745900985211491}
-    - targetCorrespondingSourceObject: {fileID: 8397888542792380213, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 2164181774531199738, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2285889499420339936}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
---- !u!4 &8453646964857639979 stripped
+--- !u!4 &2293070915730078180 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8397888542792380213, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2164181774531199738, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
   m_PrefabInstance: {fileID: 133463131447917342}
   m_PrefabAsset: {fileID: 0}

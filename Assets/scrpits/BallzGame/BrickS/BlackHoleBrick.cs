@@ -7,7 +7,6 @@ using Utils;
 
 public class BlackHoleBrick : SpecialBrick
     {
-        public static string EffectFloatText = "BLOCK!";
         [SerializeField]private SpriteRenderer BlackholeSprite;
         [SerializeField]private TriggerCollector triggers;
         public List<Brick> SurroundingBricks = new List<Brick>();

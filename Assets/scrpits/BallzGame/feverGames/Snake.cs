@@ -20,7 +20,6 @@ namespace BallzGame.Minigame
 
         public GameObject WallPrefab;
         public GameObject FoodPrefab;
-        public FloatText FloatTextPrefab;
         private (GameObject, bool)[,] visuals;
         public Transform CameraPosition;
 
@@ -383,7 +382,7 @@ namespace BallzGame.Minigame
                 int half = Mathf.CeilToInt((float)hp / 2);
 
                 snake.AddBody();
-                FloatText(tile.Item1.transform.position, half);
+                GameManager.DoDamageText(tile.Item1.transform.position, half);
                 hp -= half;
                 if (hp <= 0)
                 {
@@ -434,34 +433,7 @@ namespace BallzGame.Minigame
             return new Vector2Int(0, 0);
         }
 
-        void FloatText(Vector3 pos, int val)
-        {
-            if (FloatTextPrefab != null)
-            {
-                Vector3 spawnPos = pos;
 
-                // 👉 稍微抬高一点避免重叠
-                spawnPos += Vector3.up * 0.2f;
-
-                // 👉 随机一点方向（更自然）
-                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
-
-                // 👉 实例化
-                FloatText ft = Instantiate(
-                    FloatTextPrefab,
-                    spawnPos,
-                    Quaternion.identity
-                );
-
-                // 👉 颜色可以自己调（这里红色伤害）
-                ft.DoFloatText(
-                    -val,
-                    spawnPos,
-                    Color.white,
-                    dir
-                );
-            }
-        }
 
         // =========================
         // 🛑 结束游戏
@@ -531,12 +503,8 @@ namespace BallzGame.Minigame
                                     if (damage > 0)
                                     {
                                         brick.TakeDamage(damage);
-                                        Vector3 spawnPos = brick.transform.position;
 
-                                        // 👉 稍微抬高一点避免重叠
-                                        spawnPos += Vector3.up * 0.2f;
-
-                                        FloatText(spawnPos, damage);
+                                        GameManager.DoDamageText(brick.transform.position, damage);
 
                                     }
                                 }
@@ -554,12 +522,8 @@ namespace BallzGame.Minigame
                                 if (damage > 0)
                                 {
                                     brick.TakeDamage(damage);
-                                    Vector3 spawnPos = brick.transform.position;
 
-                                    // 👉 稍微抬高一点避免重叠
-                                    spawnPos += Vector3.up * 0.2f;
-
-                                    FloatText(spawnPos, damage);
+                                    GameManager.DoDamageText(brick.transform.position, damage);
 
                                 }
                             }

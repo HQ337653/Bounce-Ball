@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using BallzGame.Managers;
 using UnityEngine;
 using Utils;
 
@@ -11,8 +12,6 @@ namespace BallzGame.Bricks.SpecialBricks
         public TriggerCollector triggers;
         public GameObject HealVisual;
         public int HealAmount = 3;
-
-        public FloatText FloatTextPrefab;
         private bool activated;
 
         [SerializeField]
@@ -58,35 +57,7 @@ namespace BallzGame.Bricks.SpecialBricks
             triggers.gameObject.SetActive(false);
         }
 
-        void FloatText(Vector3 pos, string val)
-        {
-            if (FloatTextPrefab != null)
-            {
-                Vector3 spawnPos = pos;
 
-                // 👉 稍微抬高一点避免重叠
-                spawnPos += Vector3.up * 0.2f;
-
-                // 👉 随机一点方向（更自然）
-                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
-
-                // 👉 实例化
-                FloatText ft = Instantiate(
-                    FloatTextPrefab,
-                    spawnPos,
-                    Quaternion.identity
-                );
-
-                // 👉 颜色可以自己调（这里红色伤害）
-                ft.DoFloatText(
-                    val,
-                    spawnPos,
-                    Color.green,
-                    dir,
-                    1
-                );
-            }
-        }
 
         void AddHP()
         {
@@ -94,15 +65,10 @@ namespace BallzGame.Bricks.SpecialBricks
             {
                 if(!VARIABLE)
                     return;
-                var script = VARIABLE?.GetComponent<Brick>();
+                var script = VARIABLE.GetComponent<Brick>();
                 if (script)
                 {
-                    Vector3 spawnPos = script.transform.position;
-
-                    // 👉 稍微抬高一点避免重叠
-                    spawnPos += Vector3.up * 0.2f;
-
-                    FloatText(spawnPos, "+" + HealAmount);
+                    GameManager.DoHealText(script.transform.position, HealAmount);
                     script.AddHP(HealAmount);
                 }
             }
