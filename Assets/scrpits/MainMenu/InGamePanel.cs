@@ -26,6 +26,7 @@ namespace GameMeta
 		public List<GainBallCard> GainBallPanelItems;
 		public List<GainItemCard>  GainItemCards;
 		public TextMeshProUGUI Coin;
+		public	TMP_Text WaveDisplay;
 		private void Start()
 		{
 			ShopSubPanelExit.onClick.AddListener(() =>

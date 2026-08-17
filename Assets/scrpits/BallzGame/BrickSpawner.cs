@@ -71,42 +71,81 @@ namespace BallzGame.Managers
             return BrickPrefabs[0].Brick;
         }
 
-
-
+        public List<Brick> NextBricks;
+        public List<int> NextBricksHP;
         public List<Brick> SpawnRow(int level, int width)
         {
             var parent = GameManager.Instance.BricksParent;
             var bricks = new List<Brick>();
 
+            // 是否有预设砖块
+            bool useNextBricks = NextBricks.Count == width;
+
             for (int x = 0; x < width; x++)
             {
-                if (Random.value < 0.7f)
+                if (useNextBricks)
                 {
-                    // 随机砖块
-                    Brick prefab = GetRandomBrick();
+                    // 使用预设砖块
+                    Brick prefab = NextBricks[x];
 
-
-                    var script =
-                        Instantiate(
+                    if (prefab != null)
+                    {
+                        var script = Instantiate(
                             prefab,
                             new Vector3(x, 0, 0),
                             Quaternion.identity,
                             parent
                         );
 
-
-                    bricks.Add(script);
-
-
-                    var hp = Random.Range(1f, 1.5f) * level;
-
-                    script.Init((int)hp);
+                        bricks.Add(script);
+                        var hp = 0f;
+                        if (NextBricksHP.Count==width)
+                        {
+                            hp =NextBricksHP[x];
+                        }
+                        else
+                        {
+                            hp = Random.Range(1f, 1.5f) * level;
+                        }
+                        script.Init((int)hp);
+                    }
+                    else
+                    {
+                        bricks.Add(null);
+                    }
                 }
                 else
                 {
-                    bricks.Add(null);
+                    // 原来的随机逻辑
+                    if (Random.value < 0.7f)
+                    {
+                        Brick prefab = GetRandomBrick();
+
+                        var script = Instantiate(
+                            prefab,
+                            new Vector3(x, 0, 0),
+                            Quaternion.identity,
+                            parent
+                        );
+
+                        bricks.Add(script);
+
+                        var hp = Random.Range(1f, 1.5f) * level;
+                        script.Init((int)hp);
+                    }
+                    else
+                    {
+                        bricks.Add(null);
+                    }
                 }
             }
+
+            // 预设砖块只使用一次
+            if (useNextBricks)
+            {
+                NextBricks.Clear();
+            }
+            NextBricksHP.Clear();
 
             return bricks;
         }

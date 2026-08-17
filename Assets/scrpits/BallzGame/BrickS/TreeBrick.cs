@@ -76,7 +76,6 @@ namespace BallzGame.Bricks.SpecialBricks
 
         void AddDefense()
         {
-            Debug.Log("Adding Defense" + triggers.Colliders.Count);
 
             foreach (var VARIABLE in triggers.Colliders)
             {

@@ -6,6 +6,7 @@ using BallzGame.Managers.Shop;
 using BallzGame.Minigame;
 using GameMeta;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using Utils;
 
@@ -23,7 +24,7 @@ namespace BallzGame.Managers
         public ShopController shopController;
         public Inventory inventory;
         public BallExtraDamage BallExtraDamageController;
-
+        public CrisisManager CrisisManager;
 
 
 
@@ -37,145 +38,24 @@ namespace BallzGame.Managers
         public Camera MainCamera;
         [Header("game setting")]
         public int width = 7;
-        public int height = 15;
+        [SerializeField]private int height = 15;
+        [SerializeField]private int crisisInterval=5;
         [Header("current game status")]
-        public Brick[,] grid;
+        private Brick[,] grid;
         public int level = 1;
-        public State state;
+        private State state;
         public GameResultPanel.GameResult CurrentResult;
         [Header("Configs")]
         public BallSystemConfig BallConfig;
-
+        [Header("FloatTextPrefab")]
         [SerializeField]private FloatText blockFloatText;
         [SerializeField]private FloatText brickHealFloatText;
         [SerializeField]private FloatText brickShieldFloatText;
         [SerializeField]private FloatText brickDamageFloatText;
 
-        public static void DoBlockFloatText(Vector3 pos)
-        {
+         [Header("events")]
+        public UnityEvent BeforeRowSpawn;
 
-            var floatTextPrefab = Instance.blockFloatText;
-            var   content = "BLOCK!";
-            if (floatTextPrefab != null)
-            {
-                Vector3 spawnPos = pos;
-
-                // 👉 稍微抬高一点避免重叠
-                spawnPos += Vector3.up * 0.2f;
-
-                // 👉 随机一点方向（更自然）
-                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
-
-                // 👉 实例化
-                FloatText ft = Instantiate(
-                    floatTextPrefab,
-                    spawnPos,
-                    Quaternion.identity
-                );
-
-                // 👉 颜色可以自己调（这里红色伤害）
-                ft.DoFloatText(
-                    content,
-                    spawnPos,
-                    Color.red,
-                    dir,
-                    0.8f
-                );
-            }
-        }
-        public static void DoHealText(Vector3 pos,int amount)
-        {
-
-            var floatTextPrefab = Instance.brickHealFloatText;
-            if (floatTextPrefab != null)
-            {
-                Vector3 spawnPos = pos;
-
-                // 👉 稍微抬高一点避免重叠
-                spawnPos += Vector3.up * 0.2f;
-
-                // 👉 随机一点方向（更自然）
-                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
-
-                // 👉 实例化
-                FloatText ft = Instantiate(
-                    floatTextPrefab,
-                    spawnPos,
-                    Quaternion.identity
-                );
-
-                // 👉 颜色可以自己调（这里红色伤害）
-                ft.DoFloatText(
-                    "+"+amount,
-                    spawnPos,
-                    Color.green,
-                    dir,
-                    0.8f
-                );
-            }
-        }
-        public static void DoShieldText(Vector3 pos,int amount)
-        {
-
-            var floatTextPrefab = Instance.brickShieldFloatText;
-            if (floatTextPrefab != null)
-            {
-                Vector3 spawnPos = pos;
-
-                // 👉 稍微抬高一点避免重叠
-                spawnPos += Vector3.up * 0.2f;
-
-                // 👉 随机一点方向（更自然）
-                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
-
-                // 👉 实例化
-                FloatText ft = Instantiate(
-                    floatTextPrefab,
-                    spawnPos,
-                    Quaternion.identity
-                );
-
-                // 👉 颜色可以自己调（这里红色伤害）
-                ft.DoFloatText(
-                    "-"+amount,
-                    spawnPos,
-                    Color.white,
-                    dir,
-                    0.8f
-                );
-            }
-        }
-        public static void DoDamageText(Vector3 pos,int amount)
-        {
-
-            var floatTextPrefab = Instance.brickDamageFloatText;
-            if (floatTextPrefab != null)
-            {
-                Vector3 spawnPos = pos;
-
-                // 👉 稍微抬高一点避免重叠
-                spawnPos += Vector3.up * 0.2f;
-
-                // 👉 随机一点方向（更自然）
-                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
-
-                // 👉 实例化
-                FloatText ft = Instantiate(
-                    floatTextPrefab,
-                    spawnPos,
-                    Quaternion.identity
-                );
-
-                // 👉 颜色可以自己调（这里红色伤害）
-                ft.DoFloatText(
-                    "-"+amount,
-                    spawnPos,
-                    Color.white,
-                    dir,
-                    0.8f
-                );
-            }
-        }
         private void Awake()
         {
             if (Instance == null)
@@ -202,6 +82,7 @@ namespace BallzGame.Managers
         IEnumerator GameLoop()
         {
             state = State.TrySpawnRow;
+            MainMenu.Instance.InGamePanel.WaveDisplay.text = "Wave:   "+level.ToString();
             while (true)
             {
                 switch (state)
@@ -226,6 +107,9 @@ namespace BallzGame.Managers
                         yield return new WaitForEndOfFrame();
                         yield return StartCoroutine( launcher.Launch() );
                         state = State.TrySpawnRow;
+                        level++;
+                        MainMenu.Instance.InGamePanel.WaveDisplay.text = "Wave:   "+level.ToString();
+                        MainMenu.Instance.InGamePanel.WaveDisplay.color = (level+10)  % crisisInterval == 0 ? Color.red : Color.white;
                         break;
                     case State.Fever:
                         NotifyBricksMiniGameStart();
@@ -234,7 +118,7 @@ namespace BallzGame.Managers
                         state = State.WaitForFeverOrLaunchInput;
                         break;
                     case State.TrySpawnRow:
-                        level++;
+
                         bool gameOver = !TryMoveBricksDown();
 
                         if (gameOver)
@@ -243,6 +127,12 @@ namespace BallzGame.Managers
                         }
                         else
                         {
+                            if ((level+10) % crisisInterval == 0)
+                            {
+                                CrisisManager.DoCrisis();
+                            }
+
+                            BeforeRowSpawn.Invoke();
                             SpawnTopRow();
                             state = State.WaitForFeverOrLaunchInput;
                         }
@@ -428,6 +318,132 @@ namespace BallzGame.Managers
             Fever,
             GameOver,
             ShootBall,
+        }
+
+        public static void DoBlockFloatText(Vector3 pos)
+        {
+
+            var floatTextPrefab = Instance.blockFloatText;
+            var   content = "BLOCK!";
+            if (floatTextPrefab != null)
+            {
+                Vector3 spawnPos = pos;
+
+                // 👉 稍微抬高一点避免重叠
+                spawnPos += Vector3.up * 0.2f;
+
+                // 👉 随机一点方向（更自然）
+                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
+
+                // 👉 实例化
+                FloatText ft = Instantiate(
+                    floatTextPrefab,
+                    spawnPos,
+                    Quaternion.identity
+                );
+
+                // 👉 颜色可以自己调（这里红色伤害）
+                ft.DoFloatText(
+                    content,
+                    spawnPos,
+                    Color.red,
+                    dir,
+                    0.8f
+                );
+            }
+        }
+        public static void DoHealText(Vector3 pos,int amount)
+        {
+
+            var floatTextPrefab = Instance.brickHealFloatText;
+            if (floatTextPrefab != null)
+            {
+                Vector3 spawnPos = pos;
+
+                // 👉 稍微抬高一点避免重叠
+                spawnPos += Vector3.up * 0.2f;
+
+                // 👉 随机一点方向（更自然）
+                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
+
+                // 👉 实例化
+                FloatText ft = Instantiate(
+                    floatTextPrefab,
+                    spawnPos,
+                    Quaternion.identity
+                );
+
+                // 👉 颜色可以自己调（这里红色伤害）
+                ft.DoFloatText(
+                    "+"+amount,
+                    spawnPos,
+                    Color.green,
+                    dir,
+                    0.8f
+                );
+            }
+        }
+        public static void DoShieldText(Vector3 pos,int amount)
+        {
+
+            var floatTextPrefab = Instance.brickShieldFloatText;
+            if (floatTextPrefab != null)
+            {
+                Vector3 spawnPos = pos;
+
+                // 👉 稍微抬高一点避免重叠
+                spawnPos += Vector3.up * 0.2f;
+
+                // 👉 随机一点方向（更自然）
+                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
+
+                // 👉 实例化
+                FloatText ft = Instantiate(
+                    floatTextPrefab,
+                    spawnPos,
+                    Quaternion.identity
+                );
+
+                // 👉 颜色可以自己调（这里红色伤害）
+                ft.DoFloatText(
+                    "-"+amount,
+                    spawnPos,
+                    Color.white,
+                    dir,
+                    0.8f
+                );
+            }
+        }
+        public static void DoDamageText(Vector3 pos,int amount)
+        {
+
+            var floatTextPrefab = Instance.brickDamageFloatText;
+            if (floatTextPrefab != null)
+            {
+                Vector3 spawnPos = pos;
+
+                // 👉 稍微抬高一点避免重叠
+                spawnPos += Vector3.up * 0.2f;
+
+                // 👉 随机一点方向（更自然）
+                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
+
+                // 👉 实例化
+                FloatText ft = Instantiate(
+                    floatTextPrefab,
+                    spawnPos,
+                    Quaternion.identity
+                );
+
+                // 👉 颜色可以自己调（这里红色伤害）
+                ft.DoFloatText(
+                    "-"+amount,
+                    spawnPos,
+                    Color.white,
+                    dir,
+                    0.8f
+                );
+            }
         }
     }
 

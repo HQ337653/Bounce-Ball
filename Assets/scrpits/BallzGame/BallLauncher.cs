@@ -44,7 +44,6 @@ namespace BallzGame.Managers
         // ✅ 替代鼠标点击的方法（松手触发）
         public void OnRelease()
         {
-            Debug.Log("On Release");
             Vector2 worldPos = Camera.main.ScreenToWorldPoint(
                 Mouse.current.position.ReadValue()
             );

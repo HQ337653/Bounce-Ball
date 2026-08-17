@@ -14,7 +14,7 @@ namespace BallzGame.Balls.SpecialBalls
         public float ExplosionPossibility;
         public void OnBallHit(Brick brick)
         {
-            if (Random.Range(0, 1) < ExplosionPossibility)
+            if (Random.Range(0, 1f) < ExplosionPossibility)
             {
                 if (brick.Status.Contains(Brick.BrickStatus.DisableEffect))
                 {

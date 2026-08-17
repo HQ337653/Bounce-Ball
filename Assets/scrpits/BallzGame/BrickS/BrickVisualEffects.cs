@@ -59,7 +59,6 @@ namespace BallzGame.Bricks
 
         public void SetShieldEffect(bool shield)
         {
-            Debug.Log(shield);
             outline.color = shield ? shieldColor : normalColor;
         }
 

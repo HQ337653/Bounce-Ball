@@ -29,6 +29,10 @@ PrefabInstance:
       value: 0.1415093
       objectReference: {fileID: 0}
     - target: {fileID: 7479571173023895182, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
+      propertyPath: ExplosionPossibility
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479571173023895182, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
       propertyPath: ExplosionEffectPrefab
       value: 
       objectReference: {fileID: 6939347453648918613, guid: 3b2648a7d959cc94bb6c22c5e3e91fe6, type: 3}

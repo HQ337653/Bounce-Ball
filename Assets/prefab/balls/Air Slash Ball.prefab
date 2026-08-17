@@ -125,4 +125,4 @@ MonoBehaviour:
   BallRigidBody: {fileID: 2305770670402402491}
   SlashPrefabRigidBody: {fileID: 8586374907619932469, guid: eb6546ca07bbebd44bc9e1cff43b0aab, type: 3}
   speed: 20
-  ExplosionPossibility: 1
+  ExplosionPossibility: 0.5

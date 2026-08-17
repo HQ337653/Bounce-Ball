@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionBall
   ExplosionEffectPrefab: {fileID: 6732237854996747728, guid: 19149b78690bb9f4d82c93ca864eb56f, type: 3}
-  ExplosionPossibility: 1
+  ExplosionPossibility: 0.5
 --- !u!96 &3025683179385919230
 TrailRenderer:
   serializedVersion: 4

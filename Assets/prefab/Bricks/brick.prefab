@@ -294,6 +294,7 @@ MonoBehaviour:
   VisualEffect: {fileID: 6066573623839633467}
   PointPrefab: {fileID: 5426102367861583924, guid: ea2993bf67fdd23419e8df9ac1b48ab0, type: 3}
   SpecialBrick: {fileID: 0}
+  Status: 
 --- !u!50 &129500122477862613
 Rigidbody2D:
   serializedVersion: 5
@@ -411,7 +412,6 @@ MonoBehaviour:
   returnTime: 0.1
   knockbackMultiplier: 0.02
   effectPrefab: {fileID: 8448865817493986001, guid: 70218577a8313cf40bf03c85bd711cab, type: 3}
-  floatTextPrefab: {fileID: 5088382841924657231, guid: 70a9b49be27104c4ab1a6f7f54a360d6, type: 3}
 --- !u!1 &5521147720290536474
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,7 +690,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.5276244, g: 0, b: 0.61635214, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
