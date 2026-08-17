@@ -33,6 +33,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: ef356303d2aacbe4f8cf85a7202f26d6, type: 2}
     - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
+      propertyPath: Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: OnBallHit.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -168,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d2e0db3c127794aac4ca15b1a3a3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionBall
+  EffectType: 1
   ExplosionEffectPrefab: {fileID: 6732237854996747728, guid: 19149b78690bb9f4d82c93ca864eb56f, type: 3}
   ExplosionPossibility: 0.5
 --- !u!96 &3025683179385919230

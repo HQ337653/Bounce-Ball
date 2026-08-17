@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using BallzGame.Balls;
 using BallzGame.Bricks;
 using BallzGame.Managers;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class BrickMovingDamageArea : MonoBehaviour
     [SerializeField] private Collider2D collider;
     [SerializeField] private float forceMagnitude;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private BallExtraDamage.BallType Type;
     public float DestroyAfter=-1;
     private void Start()
     {
@@ -45,7 +47,7 @@ public class BrickMovingDamageArea : MonoBehaviour
                 return;
             }
 
-            brick.TakeDamage(damage, rb.linearVelocity*forceMagnitude);
+            brick.TakeDamage(damage+GameManager.Instance.BallExtraDamageController.GetExtraDamage(Type), rb.linearVelocity*forceMagnitude);
         }
 
     }

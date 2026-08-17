@@ -14864,7 +14864,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.4
+      scalar: 0.7
       minScalar: 0.1
       maxCurve:
         serializedVersion: 2
@@ -14917,7 +14917,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -19694,6 +19694,8 @@ MonoBehaviour:
   collider: {fileID: 670615196097947006}
   ForceDirection: {x: 0, y: 0}
   ForceFromCenterMagnitude: 20
+  DestroyAfter: -1
+  Type: 4
 --- !u!50 &4215832464922808361
 Rigidbody2D:
   serializedVersion: 5

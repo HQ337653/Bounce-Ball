@@ -7,14 +7,16 @@ using Random = UnityEngine.Random;
 
 namespace BallzGame.Balls.SpecialBalls
 {
-    public class ExplosionBall : MonoBehaviour
+    public class SpawnObjectAtBrickPosition : MonoBehaviour
     {
+        public BallExtraDamage.EffectType EffectType;
         public GameObject ExplosionEffectPrefab;
         int damage;
         public float ExplosionPossibility;
         public void OnBallHit(Brick brick)
         {
-            if (Random.Range(0, 1f) < ExplosionPossibility)
+            var actualPossibility=ExplosionPossibility+GameManager.Instance.BallExtraDamageController.GetEffectValue(EffectType)/100f;
+            if (Random.Range(0, 1f) < actualPossibility)
             {
                 if (brick.Status.Contains(Brick.BrickStatus.DisableEffect))
                 {

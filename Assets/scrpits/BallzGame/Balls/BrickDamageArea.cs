@@ -14,6 +14,7 @@ namespace BallzGame.Balls.SpecialBalls
 		[SerializeField] private Vector2 ForceDirection;
 		[SerializeField] private float ForceFromCenterMagnitude;
 		public float DestroyAfter=-1;
+		[SerializeField] private BallExtraDamage.BallType Type;
 		private void Start()
 		{
 			StartCoroutine(WaitAndDisableCollider());
@@ -52,21 +53,22 @@ namespace BallzGame.Balls.SpecialBalls
 				}
 
 				Vector2 force=Vector2.zero;
+				var damage=Damage+GameManager.Instance.BallExtraDamageController.GetExtraDamage(Type);
 				if (ForceFromCenterMagnitude > 0)
 				{
 					Vector2 forceDirection = other.transform.position - gameObject.transform.position;
 					forceDirection.Normalize();
 					force= forceDirection * ForceFromCenterMagnitude;
-					brick.TakeDamage(Damage,force);
+					brick.TakeDamage(damage,force);
 				}
 				else if(ForceDirection != Vector2.zero)
 				{
 					force = ForceDirection;
-					brick.TakeDamage(Damage,force);
+					brick.TakeDamage(damage,force);
 				}
 				else
 				{
-					brick.TakeDamage(Damage);
+					brick.TakeDamage(damage);
 				}
 			}
 

@@ -2,6 +2,7 @@ using System.Net.Mime;
 
 using BallzGame.Balls;
 using BallzGame.InventorySystem;
+using BallzGame.InventorySystem.ShopItems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

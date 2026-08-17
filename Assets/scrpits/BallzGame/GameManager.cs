@@ -445,6 +445,37 @@ namespace BallzGame.Managers
                 );
             }
         }
+        public static void DoCritText(Vector3 pos,int amount)
+        {
+
+            var floatTextPrefab = Instance.brickDamageFloatText;
+            if (floatTextPrefab != null)
+            {
+                Vector3 spawnPos = pos;
+
+                // 👉 稍微抬高一点避免重叠
+                spawnPos += Vector3.up * 0.2f;
+
+                // 👉 随机一点方向（更自然）
+                Vector2 dir = (Vector2.up + Random.insideUnitCircle * 0.5f).normalized;
+
+                // 👉 实例化
+                FloatText ft = Instantiate(
+                    floatTextPrefab,
+                    spawnPos,
+                    Quaternion.identity
+                );
+
+                // 👉 颜色可以自己调（这里红色伤害）
+                ft.DoFloatText(
+                    "-"+amount,
+                    spawnPos,
+                    Color.yellow,
+                    dir,
+                    0.8f
+                );
+            }
+        }
     }
 
 

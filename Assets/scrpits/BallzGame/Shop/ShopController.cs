@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using BallzGame.Balls;
 using BallzGame.InventorySystem;
+using BallzGame.InventorySystem.ShopItems;
 using GameMeta;
 using TMPro;
 using UnityEngine;
@@ -143,14 +144,46 @@ namespace BallzGame.Managers.Shop
         {
             List<ShopItem> result = new List<ShopItem>();
 
-            int count = Mathf.Min(3, Items.Count); // 一次展示3个
+            // 只保留当前可以 Spawn 的物品
+            List<ShopItemProbability> availableItems = new List<ShopItemProbability>();
 
-            // 用临时列表做无重复抽取
-            List<ShopItemProbability> tempList = new List<ShopItemProbability>(Items);
+            foreach (var item in Items)
+            {
+                if (item.Item != null && item.Item.Spawnable())
+                {
+                    availableItems.Add(item);
+                }
+            }
+
+            // 最多展示 3 个
+            int count = Mathf.Min(3, availableItems.Count);
+
+            // 如果没有可以生成的物品
+            if (count <= 0)
+            {
+                MainMenu.Instance.InGamePanel.RefreshItemShop(result);
+                return;
+            }
+
+            // 临时列表，用于无重复抽取
+            List<ShopItemProbability> tempList =
+                new List<ShopItemProbability>(availableItems);
+
+            // 计算当前可生成物品的总概率
+            int remainingProbability = 0;
+
+            foreach (var item in tempList)
+            {
+                remainingProbability += item.Probability;
+            }
 
             for (int i = 0; i < count && tempList.Count > 0; i++)
             {
-                int random = Random.Range(0, totalItemProbability);
+                // 防止剩余概率为 0
+                if (remainingProbability <= 0)
+                    break;
+
+                int random = Random.Range(0, remainingProbability);
 
                 int current = 0;
                 int selectedIndex = 0;
@@ -166,19 +199,19 @@ namespace BallzGame.Managers.Shop
                     }
                 }
 
+                // 添加抽中的 Item
                 result.Add(tempList[selectedIndex].Item);
 
-                // 从临时列表中移除已选中的，避免重复
+                // 移除已经抽中的物品，避免重复
                 int removedProb = tempList[selectedIndex].Probability;
+
                 tempList.RemoveAt(selectedIndex);
 
-                // 重新计算剩余总概率
-                totalItemProbability -= removedProb;
+                // 更新剩余概率
+                remainingProbability -= removedProb;
             }
 
-            // 刷新完恢复总概率（如果有外部修改需求可重新归一化）
-            NormalizedProbability();
-
+            // 不需要修改 Items 本身的 Probability
             MainMenu.Instance.InGamePanel.RefreshItemShop(result);
         }
 

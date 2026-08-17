@@ -2,11 +2,16 @@ using BallzGame.Balls;
 using BallzGame.Managers;
 using UnityEngine;
 
-namespace BallzGame.InventorySystem
+namespace BallzGame.InventorySystem.ShopItems
 {
 	public class NormalBallAddDamage : ShopItem
 	{
-		public BallExtraDamage BallExtraDamageController;
+		public override bool Spawnable()
+		{
+			return  InventoryHasBelow(5);;
+		}
+
+		private BallExtraDamage BallExtraDamageController;
 
 		public override void OnAdded()
 		{
@@ -36,6 +41,7 @@ namespace BallzGame.InventorySystem
 
 	public abstract class ShopItem:MonoBehaviour
 	{
+		public abstract bool Spawnable();
 		public abstract void OnAdded();
 		public abstract void OnRemoved();
 		public string Name;
@@ -43,6 +49,14 @@ namespace BallzGame.InventorySystem
 		public Sprite Icon;
 		public int Count = 0;
 		public int Price;
-		public bool Buyable;
+		protected bool InventoryHasBelow(int amount)
+		{
+			var item = (GameManager.Instance.inventory.GetItem(GetType()));
+			if (item!=null&&item.Count >= amount)
+			{
+				return false;
+			}
+			return true;
+		}
 	}
 }

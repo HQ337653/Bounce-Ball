@@ -15,6 +15,10 @@ namespace BallzGame.Balls
 			if (extraDamage.Count != count)
 			{
 				extraDamage = new List<int>(new int[count]);
+			} count = System.Enum.GetValues(typeof(EffectType)).Length;
+			if (effectValues.Count != count)
+			{
+				effectValues = new List<int>(new int[count]);
 			}
 		}
 		public void Reset()
@@ -22,6 +26,10 @@ namespace BallzGame.Balls
 			for (int i = 0; i < extraDamage.Count; i++)
 			{
 				extraDamage[i] = 0;
+			}
+			for (int i = 0; i < effectValues.Count; i++)
+			{
+				effectValues[i] = 0;
 			}
 		}
 		public int GetExtraDamage(BallType type)
@@ -56,11 +64,61 @@ namespace BallzGame.Balls
 
 			extraDamage[index] += damage;
 		}
+		[SerializeField]
+		private List<int> effectValues = new List<int>();
+
+
+
+
+		public int GetEffectValue(EffectType type)
+		{
+			int index = (int)type;
+			if (index >= effectValues.Count)
+				return 0;
+			return effectValues[index];
+		}
+
+		public void SetEffectValue(EffectType type, int value)
+		{
+			int index = (int)type;
+			while (effectValues.Count <= index)
+			{
+				effectValues.Add(0);
+			}
+			effectValues[index] = value;
+		}
+
+		public void AddEffectValue(EffectType type, int value)
+		{
+			int index = (int)type;
+			while (effectValues.Count <= index)
+			{
+				effectValues.Add(0);
+			}
+			effectValues[index] += value;
+		}
 
 		public enum BallType
 		{
+			None,
 			NormalBall,
-			ExplosionBall
+			ExplosionBall,
+			AirSlashSpawned,
+			ExplosionSpawned,
+			HorizontalLazerSpawned,
+			VerticalLazerSpawned,
+			HorizontalLazerBall,
+			VerticalLazerBall,
+			AirSlashBall,
+			BigBall
+		}
+		public enum EffectType
+		{
+			None,
+			ExplosionPossibility,
+			LazerCollideExplosion,
+			BigBallCritPossibility,
+			BigBallCritDamage,
 
 		}
 	}

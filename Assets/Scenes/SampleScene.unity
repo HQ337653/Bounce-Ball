@@ -9487,22 +9487,20 @@ MonoBehaviour:
   _currentCoin: 300
   fillImage: {fileID: 1783445165}
   GachaBalls:
-  - Ball: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
-    Probability: 62
-  - Ball: {fileID: 3025876293728031331, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
-    Probability: 12
   - Ball: {fileID: 3170251195751001192, guid: 774b590a17d9d034ca5f89a26c29c930, type: 3}
-    Probability: 9
+    Probability: 50
   - Ball: {fileID: 195725791942427977, guid: 80ef46fa9e0a3694a8062b6531b8812f, type: 3}
-    Probability: 9
-  - Ball: {fileID: 2904686278534378089, guid: 3ef16e5b0267c2540b75db0c74f4cd23, type: 3}
-    Probability: 9
+    Probability: 50
   Gacha6Price: 50
   Gacha1Price: 10
   GoldText: {fileID: 837349558}
   Items:
   - Item: {fileID: 2443170513983730085, guid: 87d620c1efa54fa43b615a581b354266, type: 3}
-    Probability: 100
+    Probability: 33
+  - Item: {fileID: 6270477898728826529, guid: a8e38e5bbb27c094b955dec54797398b, type: 3}
+    Probability: 33
+  - Item: {fileID: 2692760886455489728, guid: 23ef37aa01d191141a54e35c5e8db68f, type: 3}
+    Probability: 33
   shopButton: {fileID: 617341607}
 --- !u!1 &1350876415
 GameObject:
@@ -11429,6 +11427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallzGame.Balls.BallExtraDamage
   extraDamage: 
+  effectValues: 
 --- !u!1 &1660542114
 GameObject:
   m_ObjectHideFlags: 0

@@ -111,7 +111,7 @@ MonoBehaviour:
   OnBallHit:
     m_PersistentCalls:
       m_Calls: []
-  Type: 0
+  Type: 1
   Data: {fileID: 11400000, guid: 050fa41de01b07b4ab3758d6f5f63756, type: 2}
   rb: {fileID: 871378100235937612}
 --- !u!58 &5894049540906907121

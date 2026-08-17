@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &1434537179065311223
+--- !u!1001 &715543312439752060
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,15 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3765991319146363778, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: m_Name
-      value: Air Slash Ball
+      value: BigBall Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: Data
       value: 
-      objectReference: {fileID: 11400000, guid: 15e32272f81c01140b05b38bb4c3720b, type: 2}
+      objectReference: {fileID: 11400000, guid: e8c3483b7e214b449ab076b5d0834389, type: 2}
     - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: Type
-      value: 9
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
+      propertyPath: BaseDamage
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: OnBallHit.m_PersistentCalls.m_Calls.Array.size
@@ -27,7 +31,7 @@ PrefabInstance:
     - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: OnBallHit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5358882266380523203}
+      objectReference: {fileID: 6294615393490629681}
     - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: OnBallHit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -38,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: OnBallHit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: AirSlashBall, Assembly-CSharp
+      value: BigBallCritDamage, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: OnBallHit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -46,27 +50,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4514277577794570849, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: m_Color.b
-      value: 0.70440245
+      value: 0.5105406
       objectReference: {fileID: 0}
     - target: {fileID: 4514277577794570849, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: m_Color.g
-      value: 0.36549175
+      value: 0.11658941
       objectReference: {fileID: 0}
     - target: {fileID: 4514277577794570849, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: m_Color.r
-      value: 0.69957274
+      value: 0.8238993
       objectReference: {fileID: 0}
     - target: {fileID: 7619471925180325237, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.22008
+      value: 3.0578656
       objectReference: {fileID: 0}
     - target: {fileID: 7619471925180325237, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.44429
+      value: -1.7683668
       objectReference: {fileID: 0}
     - target: {fileID: 7619471925180325237, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.08207
+      value: 2.183917
       objectReference: {fileID: 0}
     - target: {fileID: 7619471925180325237, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       propertyPath: m_LocalRotation.w
@@ -102,31 +106,26 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3765991319146363778, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5358882266380523203}
+      addedObject: {fileID: 6294615393490629681}
   m_SourcePrefab: {fileID: 100100000, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
---- !u!50 &2305770670402402491 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 871378100235937612, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
-  m_PrefabInstance: {fileID: 1434537179065311223}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2858381482679542901 stripped
+--- !u!1 &4444318354883006206 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3765991319146363778, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
-  m_PrefabInstance: {fileID: 1434537179065311223}
+  m_PrefabInstance: {fileID: 715543312439752060}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5358882266380523203
+--- !u!114 &6294615393490629681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2858381482679542901}
+  m_GameObject: {fileID: 4444318354883006206}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bdf1f534ebd11545b3fab6d9cbcbcdc, type: 3}
+  m_Script: {fileID: 11500000, guid: 65d5f50f3f3003947a76b26b93ac761d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AirSlashBall
-  BallRigidBody: {fileID: 2305770670402402491}
-  SlashPrefabRigidBody: {fileID: 8586374907619932469, guid: eb6546ca07bbebd44bc9e1cff43b0aab, type: 3}
-  speed: 20
-  ExplosionPossibility: 0.5
+  m_EditorClassIdentifier: Assembly-CSharp::BigBallCritDamage
+  CritDamageBasePossibility: 0.05
+  PossibilityType: 3
+  DamageType: 4
+  baseDamage: 5

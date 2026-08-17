@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BallzGame.Managers;
 using BallzGame.Balls;
 using BallzGame.InventorySystem;
+using BallzGame.InventorySystem.ShopItems;
 using BallzGame.Managers.Shop;
 using TMPro;
 using UnityEngine;
@@ -71,7 +72,7 @@ namespace GameMeta
 			{
 				var card = GainItemCards[i];
 				var data = shopItems[i];
-
+				card.button.interactable = true;
 				card.gameObject.SetActive(true);
 				card.SetData(data);
 
@@ -90,6 +91,7 @@ namespace GameMeta
 
 					// 加入背包
 					GameManager.Instance.inventory.AddItemToInventory(data);
+					card.button.interactable = false;
 				});
 			}
 		}

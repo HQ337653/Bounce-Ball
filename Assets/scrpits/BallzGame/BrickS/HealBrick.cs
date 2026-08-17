@@ -42,7 +42,7 @@ namespace BallzGame.Bricks.SpecialBricks
 
         public override void OnMiniGameEnd()
         {
-            if (moveCount == 1)
+            if (moveCount >= 1)
             {
                 HealVisual.SetActive(true);
             }

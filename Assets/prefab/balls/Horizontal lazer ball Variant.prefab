@@ -15,7 +15,11 @@ PrefabInstance:
     - target: {fileID: 3025876293728031331, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
       propertyPath: Data
       value: 
-      objectReference: {fileID: 11400000, guid: 4dfd8a4dc204a7c44af8a9c268825d24, type: 2}
+      objectReference: {fileID: 11400000, guid: 548d80047a9714645ba37fd41c04d954, type: 2}
+    - target: {fileID: 3025876293728031331, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
+      propertyPath: Type
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3241473315455563164, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
       propertyPath: m_Color.b
       value: 0.2229548
@@ -27,6 +31,10 @@ PrefabInstance:
     - target: {fileID: 3241473315455563164, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
       propertyPath: m_Color.r
       value: 0.1415093
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479571173023895182, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
+      propertyPath: EffectType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7479571173023895182, guid: 3d21f73c17b96ef4ab08c81eb1ca1619, type: 3}
       propertyPath: ExplosionPossibility
