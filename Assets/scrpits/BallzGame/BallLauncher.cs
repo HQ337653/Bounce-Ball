@@ -12,7 +12,7 @@ namespace BallzGame.Managers
         [SerializeField]private List<Ball> ballPrefabs;
         public Ball InitialBall;
         public float ElapsedTimeSinceLaunch ;
-        [SerializeField]private EventTrigger clickableArea;
+        public EventTrigger clickableArea;
         int activeBalls;
         private Coroutine timer;
         public bool HasInput;
@@ -31,8 +31,6 @@ namespace BallzGame.Managers
             if (clickableArea == null)
                 return;
 
-            clickableArea.triggers.Clear();
-
             var entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerUp;
             entry.callback.AddListener((data) =>
@@ -46,7 +44,7 @@ namespace BallzGame.Managers
         // ✅ 替代鼠标点击的方法（松手触发）
         public void OnRelease()
         {
-            Vector2 worldPos = Camera.main.ScreenToWorldPoint(
+            Vector2 worldPos = GameManager.Instance.MainCamera .ScreenToWorldPoint(
                 Mouse.current.position.ReadValue()
             );
 
