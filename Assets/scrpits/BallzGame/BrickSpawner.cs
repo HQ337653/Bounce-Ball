@@ -10,7 +10,7 @@ namespace BallzGame.Managers
         public List<BrickProbability> BrickPrefabs;
 
         private int totalProbability;
-
+        public float SpawnPossibility=0.7f;
 
         void Start()
         {
@@ -88,7 +88,7 @@ namespace BallzGame.Managers
                     // 使用预设砖块
                     Brick prefab = NextBricks[x];
 
-                    if (prefab != null)
+                    if (prefab)
                     {
                         var script = Instantiate(
                             prefab,
@@ -117,7 +117,7 @@ namespace BallzGame.Managers
                 else
                 {
                     // 原来的随机逻辑
-                    if (Random.value < 0.7f)
+                    if (Random.value < SpawnPossibility)
                     {
                         Brick prefab = GetRandomBrick();
 
@@ -129,9 +129,7 @@ namespace BallzGame.Managers
                         );
 
                         bricks.Add(script);
-
-                        var hp = Random.Range(1f, 1.5f) * level;
-                        script.Init((int)hp);
+                        script.Init((int)GetRandomHPByLevel( level));
                     }
                     else
                     {
@@ -148,6 +146,10 @@ namespace BallzGame.Managers
             NextBricksHP.Clear();
 
             return bricks;
+        }
+        public int GetRandomHPByLevel(int level)
+        {
+                return (int)(Random.Range(1f, 1.5f) * level);;
         }
     }
 

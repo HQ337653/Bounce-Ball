@@ -5,11 +5,24 @@ using UnityEngine.Serialization;
 
 public class SpecialBrickRush : CrisisBehaviour
 {
-	[SerializeField] private Brick NormalBrick;
+	[SerializeField] private Brick bigBrick;
+	[SerializeField] private Brick normalBrick;
+	[SerializeField] private Brick blackholeBrick;
+	[SerializeField] private Brick angleBrick;
+	[SerializeField] private Brick treeBrick;
+
 	public override void DoCrisis()
 	{
 		Debug.Log("DoCrisis");
-		GameManager.Instance.BeforeRowSpawn.AddListener(DoSpecialBrickRush);
+
+		if (Random.value < 0.5f)
+		{
+			GameManager.Instance.BeforeRowSpawn.AddListener(DoSpecialBrickRush);
+		}
+		else
+		{
+			GameManager.Instance.BeforeRowSpawn.AddListener(DoBigBrickRush);
+		}
 		currentWave = 0;
 	}
 
@@ -19,7 +32,7 @@ public class SpecialBrickRush : CrisisBehaviour
 	{
 		currentWave++;
 		Debug.Log("DoSpecialBrickRush");
-		SpecialBrickWave();
+		SpeciBrickRush();
 		if (currentWave >= maxWave)
 		{
 			Debug.Log("Stop");
@@ -27,12 +40,25 @@ public class SpecialBrickRush : CrisisBehaviour
 			GameManager.Instance.BeforeRowSpawn.RemoveListener(DoSpecialBrickRush);
 		}
 	}
+	public void DoBigBrickRush()
+	{
+		currentWave++;
+		Debug.Log("DoSpecialBrickRush");
+		BigBrickRush();
+		if (currentWave >= maxWave)
+		{
+			Debug.Log("Stop");
+			currentWave = 0;
+			GameManager.Instance.BeforeRowSpawn.RemoveListener(DoBigBrickRush);
+		}
+	}
 
-	public void SpecialBrickWave()
+
+	public void SpeciBrickRush()
 	{
 		var spawner = GameManager.Instance.spawner;
 
-		if (spawner == null || NormalBrick == null)
+		if (spawner == null || normalBrick == null)
 		{
 			Debug.LogWarning("CrisisManager: Spawner 或 BlackholeBrick 没有设置！");
 			return;
@@ -44,8 +70,59 @@ public class SpecialBrickRush : CrisisBehaviour
 
 		for (int i = 0; i < width; i++)
 		{
-			spawner.NextBricks.Add(NormalBrick);
+			if (Random.value < spawner.SpawnPossibility)
+			{
+				if (Random.value < 0.5f)
+				{
+					spawner.NextBricks.Add(normalBrick);
+				}
+				else
+				{
+					// 三种特殊砖等概率
+					int specialIndex = Random.Range(0, 3);
+
+					switch (specialIndex)
+					{
+						case 0:
+							spawner.NextBricks.Add(blackholeBrick);
+							break;
+
+						case 1:
+							spawner.NextBricks.Add(angleBrick);
+							break;
+
+						case 2:
+							spawner.NextBricks.Add(treeBrick);
+							break;
+					}
+				}
+			}
+			else
+			{
+				spawner.NextBricks.Add(null);
+			}
+
+		}
+	}
+	public void BigBrickRush()
+	{
+		var spawner = GameManager.Instance.spawner;
+
+		if (spawner == null || normalBrick == null)
+		{
+			Debug.LogWarning("CrisisManager: Spawner 或 BlackholeBrick 没有设置！");
+			return;
+		}
+
+		int width = GameManager.Instance.width;
+
+		spawner.NextBricks.Clear();
+
+		for (int i = 0; i < width; i++)
+		{
+			spawner.NextBricks.Add(bigBrick);
 			spawner.NextBricksHP.Add(GameManager.Instance.level*2);
 		}
 	}
+
 }

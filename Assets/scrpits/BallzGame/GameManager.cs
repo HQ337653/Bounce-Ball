@@ -39,7 +39,9 @@ namespace BallzGame.Managers
         [Header("game setting")]
         public int width = 7;
         [SerializeField]private int height = 15;
-        [SerializeField]private int crisisInterval=5;
+        [SerializeField]private int crisisInterval=15;
+        [SerializeField]private int FirstCrisis=5;
+
         [Header("current game status")]
         private Brick[,] grid;
         public int level = 1;
@@ -109,7 +111,7 @@ namespace BallzGame.Managers
                         state = State.TrySpawnRow;
                         level++;
                         MainMenu.Instance.InGamePanel.WaveDisplay.text = "Wave:   "+level.ToString();
-                        MainMenu.Instance.InGamePanel.WaveDisplay.color = (level+10)  % crisisInterval == 0 ? Color.red : Color.white;
+                        MainMenu.Instance.InGamePanel.WaveDisplay.color = (level+(crisisInterval-FirstCrisis))  % crisisInterval == 0 ? Color.red : Color.white;
                         break;
                     case State.Fever:
                         NotifyBricksMiniGameStart();
@@ -127,7 +129,7 @@ namespace BallzGame.Managers
                         }
                         else
                         {
-                            if ((level+10) % crisisInterval == 0)
+                            if ( (level+(crisisInterval-FirstCrisis))  % crisisInterval == 0)
                             {
                                 CrisisManager.DoCrisis();
                             }

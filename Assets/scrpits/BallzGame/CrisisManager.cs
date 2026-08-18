@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BallzGame.Bricks;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace BallzGame.Managers
 {
@@ -22,7 +23,8 @@ namespace BallzGame.Managers
         }
         public void DoCrisis()
         {
-            Crisis[0].DoCrisis();
+            var index=Random.Range(0, Crisis.Count);
+            Crisis[index].DoCrisis();
         }
     }
 
