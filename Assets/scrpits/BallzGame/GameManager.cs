@@ -153,7 +153,7 @@ namespace BallzGame.Managers
         {
             if (state == State.GameOver)
             {
-                CurrentResult.BallsCount  = launcher.ballPrefabs.Count;
+                CurrentResult.BallsCount  = launcher.BallCount;
                 level = 1;
                 ClearAllBricks();
                 MainMenu.Instance.InGamePanel.DieSubPanel.SetActive(false);

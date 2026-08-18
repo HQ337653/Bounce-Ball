@@ -3,6 +3,7 @@ using System.Collections;
 using BallzGame.Bricks;
 using BallzGame.Managers;
 using BallzGame.Minigame.SnakeGame;
+using GameMeta;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -35,6 +36,7 @@ namespace BallzGame.Minigame
 
         public override void StartGame(FeverGameContext context, Action onEnd)
         {
+            MainMenu.Instance.InGamePanel.SetBallzGameUI(false);
             this.onEnd = onEnd;
             Debug.Log("Starting Snake Game");
 
@@ -543,6 +545,7 @@ namespace BallzGame.Minigame
             {
                 snake.Stop();
             }
+            MainMenu.Instance.InGamePanel.SetBallzGameUI(true);
 
             onEnd?.Invoke();
             EndGameCoroutine = null;

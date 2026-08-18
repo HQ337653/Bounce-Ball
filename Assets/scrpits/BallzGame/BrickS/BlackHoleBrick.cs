@@ -73,7 +73,6 @@ public class BlackHoleBrick : SpecialBrick
 
         void AddDefense()
         {
-            Debug.Log("Adding Defense" + triggers.Colliders.Count);
 
             foreach (var VARIABLE in triggers.Colliders)
             {

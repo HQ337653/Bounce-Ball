@@ -9,7 +9,7 @@ namespace BallzGame.Managers
 {
     public class BallLauncher : MonoBehaviour
     {
-        public List<Ball> ballPrefabs;
+        [SerializeField]private List<Ball> ballPrefabs;
         public Ball InitialBall;
         public float ElapsedTimeSinceLaunch ;
         [SerializeField]private EventTrigger clickableArea;
@@ -17,11 +17,13 @@ namespace BallzGame.Managers
         private Coroutine timer;
         public bool HasInput;
         private Vector2 inputTarget;
-
+        public int BallCount;
+        public Dictionary<BallData,int> ballDatas=new();
         private void Awake()
         {
             SetupEventTrigger();
         }
+
 
         // ✅ 自动绑定 EventTrigger（PointerUp）
         void SetupEventTrigger()
@@ -122,19 +124,41 @@ namespace BallzGame.Managers
         {
             if (balls == null) return;
 
+            // 初始化 ballPrefabs 列表（如果尚未创建）
             if (ballPrefabs == null)
             {
                 ballPrefabs = new List<Ball>();
             }
 
-            ballPrefabs.AddRange(balls);
+            // 遍历每个球
+            foreach (Ball ball in balls)
+            {
+                // 将球添加到预制体列表（根据你的原有逻辑保留）
+                ballPrefabs.Add(ball);
+
+                // 将球对应的 BallData 加入字典并计数
+                if (!ballDatas.TryAdd(ball.Data, 1))
+                {
+                    ballDatas[ball.Data]++;
+                }
+            }
+
+            // 更新总球数：实际添加的球的数量
+            BallCount += balls.Count;
+
         }
 
         public void Reset()
         {
             ballPrefabs.Clear();
+            BallCount = 0;
+            ballDatas.Clear();
             ballPrefabs.Add(InitialBall);
-
+            // 将球对应的 BallData 加入字典并计数
+            if (!ballDatas.TryAdd(InitialBall.Data, 1))
+            {
+                ballDatas[InitialBall.Data]++;
+            }
             if (timer != null)
             {
                 StopCoroutine(timer);

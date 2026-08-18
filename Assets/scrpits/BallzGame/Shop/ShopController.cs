@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using BallzGame.Balls;
 using BallzGame.InventorySystem;
@@ -5,6 +6,7 @@ using BallzGame.InventorySystem.ShopItems;
 using GameMeta;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BallzGame.Managers.Shop
@@ -36,23 +38,25 @@ namespace BallzGame.Managers.Shop
         // 商店商品列表（带概率权重）
         public List<ShopItemProbability> Items;
 
-        [SerializeField] Button shopButton;
+        [SerializeField] EventTrigger shopButton;
 
         private int totalGachaProbability;
         private int totalItemProbability;
 
         private void Start()
         {
+
             // 初始化时归一化概率
             NormalizedProbability();
 
             UpdateUI();
 
-            shopButton.onClick.AddListener(OpenShowPanel);
 
             MainMenu.Instance.InGamePanel.ShopMultiplePull.onClick.AddListener(DoGacha6);
             MainMenu.Instance.InGamePanel.ShopOnePull.onClick.AddListener(DoGacha1);
+
         }
+
 
         // ==================== 概率归一化 ====================
 
@@ -217,10 +221,6 @@ namespace BallzGame.Managers.Shop
 
         // ==================== UI & 交互 ====================
 
-        private void OpenShowPanel()
-        {
-            MainMenu.Instance.InGamePanel.ShopSubPanel.SetActive(true);
-        }
 
         public void GainCoin(int amount)
         {
@@ -234,12 +234,23 @@ namespace BallzGame.Managers.Shop
             MainMenu.Instance.InGamePanel.ShopOnePull.interactable = CurrentCoin >= Gacha1Price;
         }
 
-        private void DoGacha6()
+        [SerializeField]public int refreshPrice;
+        public void PlayerRefreshItem()
+        {
+            if (CurrentCoin < refreshPrice)
+            {
+                return;
+            }
+
+            CurrentCoin -= refreshPrice;
+            RefreshShopItems();
+        }
+        public void DoGacha6()
         {
             DoGacha(6, Gacha6Price);
         }
 
-        private void DoGacha1()
+        public void DoGacha1()
         {
             DoGacha(1, Gacha1Price);
         }
@@ -282,6 +293,7 @@ namespace BallzGame.Managers.Shop
             {
                 fillImage.fillAmount = CurrentCoin / (float)Gacha6Price;
             }
+            MainMenu.Instance.InGamePanel.ShowCurrentBall();
         }
     }
 

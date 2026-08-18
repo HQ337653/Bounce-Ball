@@ -1,12 +1,15 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using BallzGame.Managers;
 using BallzGame.Balls;
 using BallzGame.InventorySystem;
 using BallzGame.InventorySystem.ShopItems;
 using BallzGame.Managers.Shop;
+using BallzGame.Managers.Shop.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace GameMeta
@@ -28,6 +31,15 @@ namespace GameMeta
 		public List<GainItemCard>  GainItemCards;
 		public TextMeshProUGUI Coin;
 		public	TMP_Text WaveDisplay;
+		public BallsDisplay BallsDisplay;
+		public Button RefreshShopItem;
+		[SerializeField]private EventTrigger shopButton;
+		[SerializeField]private GameObject ballzGameUI;
+
+		public void SetBallzGameUI(bool active)
+		{
+			ballzGameUI.active = active;
+		}
 		private void Start()
 		{
 			ShopSubPanelExit.onClick.AddListener(() =>
@@ -40,6 +52,59 @@ namespace GameMeta
 					GainBallPanel.SetActive(false);
 				}
 			);
+			RefreshShopItem.onClick.AddListener(GameManager.Instance.shopController. RefreshShopItems);
+			AddShopButtonEvents();
+		}
+		private Coroutine longPressCoroutine;
+		private bool longPressTriggered;
+		private void AddShopButtonEvents()
+		{
+			// 按下
+			EventTrigger.Entry pointerDown = new EventTrigger.Entry
+			{
+				eventID = EventTriggerType.PointerDown
+			};
+
+			pointerDown.callback.AddListener(_ =>
+			{
+				longPressTriggered = false;
+				longPressCoroutine = StartCoroutine(CheckLongPress());
+			});
+
+			shopButton.triggers.Add(pointerDown);
+
+
+			// 松开
+			EventTrigger.Entry pointerUp = new EventTrigger.Entry
+			{
+				eventID = EventTriggerType.PointerUp
+			};
+
+			pointerUp.callback.AddListener(_ =>
+			{
+				if (longPressCoroutine != null)
+				{
+					StopCoroutine(longPressCoroutine);
+					longPressCoroutine = null;
+				}
+
+				// 没有触发长按，才算短按
+				if (!longPressTriggered)
+				{
+					ShowCurrentBall();
+					ShopSubPanel.SetActive(true);
+				}
+			});
+
+			shopButton.triggers.Add(pointerUp);
+		}
+
+		private IEnumerator CheckLongPress()
+		{
+			yield return new WaitForSeconds(0.5f);
+
+			longPressTriggered = true;
+			GameManager.Instance.shopController.DoGacha6();
 		}
 		public void ShowGainBalls(List<BallData> datas)
 		{
@@ -59,6 +124,10 @@ namespace GameMeta
 			}
 		}
 
+		public void ShowCurrentBall()
+		{
+			BallsDisplay.ShowBalls(GameManager.Instance.launcher.ballDatas);
+		}
 		public void RefreshItemShop(List<ShopItem> shopItems)
 		{
 			// 全部隐藏
