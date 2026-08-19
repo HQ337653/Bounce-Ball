@@ -18,6 +18,8 @@ namespace BallzGame.Balls
 		private Rigidbody2D rb;
 		BallSystemConfig config;
 		private BallLauncher launcher;
+		public int HitButtomMaxTime;
+		private int HitButtomCurrentTime;
 		private void Awake()
 		{
 
@@ -27,13 +29,25 @@ namespace BallzGame.Balls
 		{
 			launcher = l;
 			this.config = config;
-
-
+			HitButtomCurrentTime = 0;
+			HitButtomMaxTime=GameManager.Instance.BallExtraDamageController.GetExtraBottomBounceTime(Type);
 			rb.linearVelocity = direction * GameManager.Instance.BallConfig.BallSpeed;
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
+			if (collision.gameObject.CompareTag("Bottom"))
+			{
+				if (HitButtomCurrentTime < HitButtomMaxTime)
+				{
+					HitButtomCurrentTime += 1;
+				}
+				else
+				{
+					launcher.OnBallReturned(this);
+					Destroy(gameObject);
+				}
+			}
 			Brick brick = collision.gameObject.GetComponent<Brick>();
 			if (brick != null)
 			{
@@ -53,14 +67,7 @@ namespace BallzGame.Balls
 			}
 		}
 
-		private void OnTriggerEnter2D(Collider2D other)
-		{
-			if (other.CompareTag("Bottom"))
-			{
-				launcher.OnBallReturned(this);
-				Destroy(gameObject);
-			}
-		}
+
 
 	}
 

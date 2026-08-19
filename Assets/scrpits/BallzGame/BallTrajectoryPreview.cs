@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,287 +6,324 @@ using UnityEngine.InputSystem;
 
 namespace BallzGame.Managers
 {
-    using System.Collections.Generic;
-    using UnityEngine;
-    using UnityEngine.EventSystems;
-    using UnityEngine.InputSystem;
-
-    namespace BallzGame.Managers
+    public class BallTrajectoryPreview : MonoBehaviour
     {
-        public class BallTrajectoryPreview : MonoBehaviour
+        [Header("References")]
+        [SerializeField] private BallLauncher launcher;
+        [SerializeField] private LineRenderer lineRenderer;
+
+        [Header("Trajectory")]
+        [SerializeField] private float maxDistance = 100f;
+        [SerializeField] private float skin = 0.01f;
+        [SerializeField] private int bounceTime;
+
+        [Header("Input")]
+        [SerializeField] private float showDelay = 0.05f;
+
+        private EventTrigger area;
+
+        private EventTrigger.Entry pointerDownEntry;
+        private EventTrigger.Entry dragEntry;
+        private EventTrigger.Entry pointerUpEntry;
+
+        private bool dragging;
+        private bool trajectoryVisible;
+
+        private Vector2 inputTarget;
+
+        private Coroutine showCoroutine;
+
+        private void Awake()
         {
-            [Header("References")]
-            [SerializeField] private BallLauncher launcher;
+            if (launcher == null)
+                launcher = GetComponent<BallLauncher>();
 
-            [SerializeField] private LineRenderer lineRenderer;
+            lineRenderer.positionCount = 0;
+            lineRenderer.enabled = false;
+        }
 
-            [Header("Trajectory")]
-            [SerializeField] private float maxDistance = 100f;
+        private void Start()
+        {
+            area = launcher.clickableArea;
 
-            [SerializeField] private float skin = 0.01f;
+            SetupEventTrigger();
+        }
 
-            private EventTrigger area;
+        private void OnDestroy()
+        {
+            RemoveEventTrigger();
 
-            private EventTrigger.Entry pointerDownEntry;
-            private EventTrigger.Entry dragEntry;
-            private EventTrigger.Entry pointerUpEntry;
-
-            private bool dragging;
-
-            private Vector2 inputTarget;
-            [SerializeField] int bounceTime;
-
-            private void Awake()
+            if (showCoroutine != null)
             {
-                if (launcher == null)
-                    launcher = GetComponent<BallLauncher>();
+                StopCoroutine(showCoroutine);
+                showCoroutine = null;
+            }
+        }
 
-                lineRenderer.positionCount = 0;
-                lineRenderer.enabled = false;
+        // =========================================================
+        // EventTrigger
+        // =========================================================
+
+        private void SetupEventTrigger()
+        {
+            if (area == null)
+                return;
+
+            pointerDownEntry = AddEventTrigger(
+                EventTriggerType.PointerDown,
+                OnPointerDown
+            );
+
+            dragEntry = AddEventTrigger(
+                EventTriggerType.Drag,
+                OnDrag
+            );
+
+            pointerUpEntry = AddEventTrigger(
+                EventTriggerType.PointerUp,
+                OnPointerUp
+            );
+        }
+
+        private EventTrigger.Entry AddEventTrigger(
+            EventTriggerType type,
+            UnityEngine.Events.UnityAction<BaseEventData> callback)
+        {
+            EventTrigger.Entry entry = new EventTrigger.Entry
+            {
+                eventID = type
+            };
+
+            entry.callback.AddListener(callback);
+
+            area.triggers.Add(entry);
+
+            return entry;
+        }
+
+        private void RemoveEventTrigger()
+        {
+            if (area == null)
+                return;
+
+            if (pointerDownEntry != null)
+            {
+                area.triggers.Remove(pointerDownEntry);
+                pointerDownEntry = null;
             }
 
-            private void Start()
+            if (dragEntry != null)
             {
-                area = launcher.clickableArea;
-
-                SetupEventTrigger();
+                area.triggers.Remove(dragEntry);
+                dragEntry = null;
             }
 
-            private void OnDestroy()
+            if (pointerUpEntry != null)
             {
-                RemoveEventTrigger();
+                area.triggers.Remove(pointerUpEntry);
+                pointerUpEntry = null;
+            }
+        }
+
+        // =========================================================
+        // Input
+        // =========================================================
+
+        private void OnPointerDown(BaseEventData data)
+        {
+            dragging = true;
+            trajectoryVisible = false;
+
+            UpdateInputTarget();
+
+            // 防止之前的 Coroutine 还在
+            if (showCoroutine != null)
+            {
+                StopCoroutine(showCoroutine);
             }
 
-            // =========================================================
-            // EventTrigger
-            // =========================================================
+            showCoroutine = StartCoroutine(
+                ShowTrajectoryAfterDelay()
+            );
+        }
 
-            private void SetupEventTrigger()
+        private IEnumerator ShowTrajectoryAfterDelay()
+        {
+            yield return new WaitForSeconds(showDelay);
+
+            // 这 0.05 秒内已经松手
+            if (!dragging)
             {
-                if (area == null)
-                    return;
+                showCoroutine = null;
+                yield break;
+            }
 
-                pointerDownEntry = AddEventTrigger(
-                    EventTriggerType.PointerDown,
-                    OnPointerDown
+            trajectoryVisible = true;
+
+            UpdateInputTarget();
+            UpdateTrajectory();
+
+            showCoroutine = null;
+        }
+
+        private void OnDrag(BaseEventData data)
+        {
+            if (!dragging)
+                return;
+
+            UpdateInputTarget();
+
+            // 还没达到 0.05 秒
+            if (!trajectoryVisible)
+                return;
+
+            UpdateTrajectory();
+        }
+
+        private void OnPointerUp(BaseEventData data)
+        {
+            dragging = false;
+
+            if (showCoroutine != null)
+            {
+                StopCoroutine(showCoroutine);
+                showCoroutine = null;
+            }
+
+            HideTrajectory();
+        }
+
+        private void UpdateInputTarget()
+        {
+            inputTarget =
+                GameManager.Instance.MainCamera.ScreenToWorldPoint(
+                    Mouse.current.position.ReadValue()
                 );
+        }
 
-                dragEntry = AddEventTrigger(
-                    EventTriggerType.Drag,
-                    OnDrag
-                );
+        // =========================================================
+        // Trajectory
+        // =========================================================
 
-                pointerUpEntry = AddEventTrigger(
-                    EventTriggerType.PointerUp,
-                    OnPointerUp
-                );
-            }
+        private void UpdateTrajectory()
+        {
+            Vector2 startPosition =
+                launcher.transform.position;
 
-            private EventTrigger.Entry AddEventTrigger(
-                EventTriggerType type,
-                UnityEngine.Events.UnityAction<BaseEventData> callback
-            )
+            Vector2 direction =
+                inputTarget - startPosition;
+
+            if (direction.sqrMagnitude < 0.0001f)
             {
-                EventTrigger.Entry entry = new EventTrigger.Entry
-                {
-                    eventID = type
-                };
-
-                entry.callback.AddListener(callback);
-
-                area.triggers.Add(entry);
-
-                return entry;
-            }
-
-            private void RemoveEventTrigger()
-            {
-                if (area == null)
-                    return;
-
-                if (pointerDownEntry != null)
-                {
-                    area.triggers.Remove(pointerDownEntry);
-                    pointerDownEntry = null;
-                }
-
-                if (dragEntry != null)
-                {
-                    area.triggers.Remove(dragEntry);
-                    dragEntry = null;
-                }
-
-                if (pointerUpEntry != null)
-                {
-                    area.triggers.Remove(pointerUpEntry);
-                    pointerUpEntry = null;
-                }
-            }
-
-            // =========================================================
-            // Input
-            // =========================================================
-
-            private void OnPointerDown(BaseEventData data)
-            {
-                dragging = true;
-
-                UpdateInputTarget();
-                UpdateTrajectory();
-            }
-
-            private void OnDrag(BaseEventData data)
-            {
-                if (!dragging)
-                    return;
-
-                UpdateInputTarget();
-                UpdateTrajectory();
-            }
-
-            private void OnPointerUp(BaseEventData data)
-            {
-                dragging = false;
-
                 HideTrajectory();
+                return;
             }
 
-            private void UpdateInputTarget()
+            direction.Normalize();
+
+            List<Vector3> points = new()
             {
-                inputTarget =
-                    GameManager.Instance.MainCamera.ScreenToWorldPoint(
-                        Mouse.current.position.ReadValue()
-                    );
-            }
+                startPosition
+            };
 
-            // =========================================================
-            // Trajectory
-            // =========================================================
+            Vector2 currentPosition = startPosition;
 
-            private void UpdateTrajectory()
+            int bounceCount = 0;
+
+            while (bounceCount < bounceTime + 1)
             {
-                Vector2 startPosition =
-                    launcher.transform.position;
-
-                Vector2 direction =
-                    inputTarget - startPosition;
-
-                if (direction.sqrMagnitude < 0.0001f)
-                {
-                    HideTrajectory();
-                    return;
-                }
-
-                direction.Normalize();
-
-                List<Vector3> points = new()
-                {
-                    startPosition
-                };
-
-                Vector2 currentPosition = startPosition;
-
-                int bounceCount = 0;
-
-                while (bounceCount < bounceTime+1)
-                {
-                    RaycastHit2D hit =
-                        GetSolidHit(
-                            currentPosition,
-                            direction,
-                            maxDistance
-                        );
-
-                    // 没有碰到墙
-                    // 直接画到 maxDistance，然后结束
-                    if (hit.collider == null)
-                    {
-                        points.Add(
-                            currentPosition +
-                            direction * maxDistance
-                        );
-
-                        break;
-                    }
-
-                    // 画到碰撞点
-                    points.Add(hit.point);
-
-                    // 发生一次反弹
-                    bounceCount++;
-
-                    // =================================================
-                    // 已经达到最大反弹次数
-                    // 停在这里，不再延伸
-                    // =================================================
-
-                    if (bounceCount >= bounceTime+1)
-                    {
-                        break;
-                    }
-
-                    // =================================================
-                    // 继续反弹
-                    // =================================================
-
-                    direction =
-                        Vector2.Reflect(
-                            direction,
-                            hit.normal
-                        ).normalized;
-
-                    currentPosition =
-                        hit.point +
-                        direction * skin;
-                }
-
-                lineRenderer.positionCount = points.Count;
-                lineRenderer.SetPositions(points.ToArray());
-
-                lineRenderer.enabled = true;
-            }
-
-            // =========================================================
-            // 获取 Ball 真正会撞到的 Collider
-            // =========================================================
-
-            private RaycastHit2D GetSolidHit(
-                Vector2 origin,
-                Vector2 direction,
-                float distance
-            )
-            {
-                RaycastHit2D[] hits =
-                    Physics2D.RaycastAll(
-                        origin,
+                RaycastHit2D hit =
+                    GetSolidHit(
+                        currentPosition,
                         direction,
-                        distance
+                        maxDistance
                     );
 
-                foreach (RaycastHit2D hit in hits)
+                // 没有碰到墙
+                if (hit.collider == null)
                 {
-                    if (hit.collider == null)
-                        continue;
+                    points.Add(
+                        currentPosition +
+                        direction * maxDistance
+                    );
 
-                    // Trigger 不参与 Ball 反弹
-                    if (hit.collider.isTrigger)
-                        continue;
-
-                    return hit;
+                    break;
                 }
 
-                return default;
+                // 画到碰撞点
+                points.Add(hit.point);
+
+                // 发生一次反弹
+                bounceCount++;
+
+                // 达到最大次数
+                if (bounceCount >= bounceTime + 1)
+                {
+                    break;
+                }
+
+                // 反弹
+                direction =
+                    Vector2.Reflect(
+                        direction,
+                        hit.normal
+                    ).normalized;
+
+                currentPosition =
+                    hit.point +
+                    direction * skin;
             }
 
-            // =========================================================
-            // Hide
-            // =========================================================
+            lineRenderer.positionCount = points.Count;
 
-            private void HideTrajectory()
+            lineRenderer.SetPositions(
+                points.ToArray()
+            );
+
+            lineRenderer.enabled = true;
+        }
+
+        // =========================================================
+        // 获取 Ball 真正会撞到的 Collider
+        // =========================================================
+
+        private RaycastHit2D GetSolidHit(
+            Vector2 origin,
+            Vector2 direction,
+            float distance)
+        {
+            RaycastHit2D[] hits =
+                Physics2D.RaycastAll(
+                    origin,
+                    direction,
+                    distance
+                );
+
+            foreach (RaycastHit2D hit in hits)
             {
-                lineRenderer.positionCount = 0;
-                lineRenderer.enabled = false;
+                if (hit.collider == null)
+                    continue;
+
+                // Trigger 不参与 Ball 反弹
+                if (hit.collider.isTrigger)
+                    continue;
+
+                return hit;
             }
+
+            return default;
+        }
+
+        // =========================================================
+        // Hide
+        // =========================================================
+
+        private void HideTrajectory()
+        {
+            trajectoryVisible = false;
+
+            lineRenderer.positionCount = 0;
+            lineRenderer.enabled = false;
         }
     }
 }

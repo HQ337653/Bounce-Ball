@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using BallzGame.InventorySystem.ShopItems;
-using UnityEditor;
+using BallzGame.Managers;
 using UnityEngine;
 
 namespace BallzGame.InventorySystem
@@ -15,8 +15,11 @@ namespace BallzGame.InventorySystem
 			if (item == null)
 				return;
 
-			// 检查是否已经拥有这个类型的 Item
-			ShopItem existingItem = GetItem(item.GetType());
+			// Type + Version 都相同才合并
+			ShopItem existingItem = GetItem(
+				item.GetType(),
+				item.GetVersion()
+			);
 
 			if (existingItem != null)
 			{
@@ -24,7 +27,7 @@ namespace BallzGame.InventorySystem
 				return;
 			}
 
-			// 没有这个 Item，创建一个新的
+			// Type 或 Version 不同，创建一个新的
 			ShopItem newItem = Instantiate(item, transform);
 
 			newItem.Count = 0;
@@ -33,31 +36,37 @@ namespace BallzGame.InventorySystem
 			items.Add(newItem);
 		}
 
-		public ShopItem GetItem(System.Type type)
+		public ShopItem GetItem(System.Type type, int version)
 		{
 			foreach (ShopItem item in items)
 			{
-				if (item.GetType() == type)
+				if (item.GetType() == type &&
+				    item.GetVersion() == version)
+				{
 					return item;
+				}
 			}
 
 			return null;
 		}
 
-		public T GetItem<T>() where T : ShopItem
+		public T GetItem<T>(int version) where T : ShopItem
 		{
 			foreach (ShopItem item in items)
 			{
-				if (item is T)
+				if (item is T &&
+				    item.GetVersion() == version)
+				{
 					return (T)item;
+				}
 			}
 
 			return null;
 		}
 
-		public bool HasItem<T>() where T : ShopItem
+		public bool HasItem<T>(int version) where T : ShopItem
 		{
-			return GetItem<T>() != null;
+			return GetItem<T>(version) != null;
 		}
 
 		public void RemoveItem(ShopItem item)
@@ -65,7 +74,10 @@ namespace BallzGame.InventorySystem
 			if (item == null)
 				return;
 
-			ShopItem existingItem = GetItem(item.GetType());
+			ShopItem existingItem = GetItem(
+				item.GetType(),
+				item.GetVersion()
+			);
 
 			if (existingItem == null)
 				return;
@@ -79,5 +91,37 @@ namespace BallzGame.InventorySystem
 				Destroy(existingItem.gameObject);
 			}
 		}
+	}
+}
+
+namespace BallzGame.InventorySystem.ShopItems
+{
+
+	public abstract class ShopItem:MonoBehaviour
+	{
+		public abstract int GetVersion();
+		public abstract bool Spawnable();
+		public abstract void OnAdded();
+		public abstract void OnRemoved();
+		public string Name;
+		public string Description;
+		public Sprite Icon;
+		public int Price;
+		public int Count = 0;
+		protected bool InventoryHasBelow(int amount)
+		{
+			var item = GameManager.Instance.inventory.GetItem(
+				GetType(),
+				GetVersion()
+			);
+
+			if (item != null && item.Count >= amount)
+			{
+				return false;
+			}
+
+			return true;
+		}
+
 	}
 }

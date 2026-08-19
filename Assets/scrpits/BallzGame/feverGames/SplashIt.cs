@@ -446,7 +446,7 @@ namespace BallzGame.Minigame
                 if (brick == null)
                     continue;
 
-                brick.TakeDamage(damage);
+                brick.TakeDamage(damage,this);
             }
         }
 

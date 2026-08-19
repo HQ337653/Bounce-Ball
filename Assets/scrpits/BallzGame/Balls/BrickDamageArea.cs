@@ -68,7 +68,7 @@ namespace BallzGame.Balls.SpecialBalls
 				}
 				else
 				{
-					brick.TakeDamage(damage);
+					brick.TakeDamage(damage,this);
 				}
 			}
 

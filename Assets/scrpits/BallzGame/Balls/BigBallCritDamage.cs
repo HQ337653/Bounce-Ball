@@ -16,7 +16,7 @@ public class BigBallCritDamage : MonoBehaviour
         if (Random.Range(0, 1f) < actualPossibility)
         {
             var damage=baseDamage+GameManager.Instance.BallExtraDamageController.GetEffectValue(DamageType);
-            brick.TakeDamage(damage);
+            brick.TakeDamage(damage,this);
             GameManager.DoCritText(brick.transform.position,damage);
         }
     }

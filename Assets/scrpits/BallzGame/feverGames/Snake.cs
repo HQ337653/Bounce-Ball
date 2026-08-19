@@ -504,7 +504,7 @@ namespace BallzGame.Minigame
                                     yield return new WaitForSeconds(0.05f);
                                     if (damage > 0)
                                     {
-                                        brick.TakeDamage(damage);
+                                        brick.TakeDamage(damage,this);
 
                                         GameManager.DoDamageText(brick.transform.position, damage);
 
@@ -523,7 +523,7 @@ namespace BallzGame.Minigame
                                 yield return new WaitForSeconds(0.05f);
                                 if (damage > 0)
                                 {
-                                    brick.TakeDamage(damage);
+                                    brick.TakeDamage(damage,this);
 
                                     GameManager.DoDamageText(brick.transform.position, damage);
 

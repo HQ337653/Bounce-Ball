@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8276137834492466018}
-  - component: {fileID: 2692760886455489728}
+  - component: {fileID: 7851868286367912840}
   m_Layer: 0
   m_Name: LazerCollusionExplosion
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2692760886455489728
+--- !u!114 &7851868286367912840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,12 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5472714737137578065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d065099592e4ee883e1bd4412cb7243, type: 3}
+  m_Script: {fileID: 11500000, guid: bb165d60396044ed8702134aeade0065, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BallzGame.InventorySystem.LazerCollideCreateExplosion
+  m_EditorClassIdentifier: Assembly-CSharp::scrpits.BallzGame.BallzShopItem.AddExtraEffectShopItem
   Name: Explode When Lazer collide
   Description: Create exlposion when lazer collide
-  Icon: {fileID: 7472191733098341780, guid: cd7152a81ff5a3d498aeb839ed184794, type: 3}
-  Count: 0
+  Icon: {fileID: 21300000, guid: 2b862891865814b5580f3b59efc08168, type: 3}
   Price: 2
-  Buyable: 0
+  Count: 0
+  maxAmount: 1
+  target: 2
+  increment: 1

@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigBrick Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1941241938559150035, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4629431560487495573, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: m_Color.b
       value: 0.2562646
@@ -37,24 +41,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: colors.key0.b
+      value: 0.19823186
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: colors.key0.g
-      value: 0.36263627
+      value: 0.21836537
       objectReference: {fileID: 0}
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: colors.key0.r
-      value: 0.84313726
+      value: 0.24528301
       objectReference: {fileID: 0}
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: colors.key1.b
-      value: 0.090844154
+      value: 0.27260008
       objectReference: {fileID: 0}
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: colors.key1.g
-      value: 0
+      value: 0.24787383
       objectReference: {fileID: 0}
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: colors.key1.r
-      value: 1
+      value: 0.52201253
       objectReference: {fileID: 0}
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: colors.key2.b
@@ -75,6 +83,18 @@ PrefabInstance:
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: colors.key3.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: shieldColor.b
+      value: 0.18897589
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: shieldColor.g
+      value: 0.20023732
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      propertyPath: shieldColor.r
+      value: 0.24528301
       objectReference: {fileID: 0}
     - target: {fileID: 6066573623839633467, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
       propertyPath: colors.m_NumColorKeys
@@ -123,5 +143,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1941241938559150035, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 104246491320257687}
   m_SourcePrefab: {fileID: 100100000, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+--- !u!1 &4989378740085604659 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1941241938559150035, guid: ed53b3b6b329a2d47bfe1917e7ef328c, type: 3}
+  m_PrefabInstance: {fileID: 6903306593318266592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &104246491320257687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4989378740085604659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6f5e8ecf410f4488ad6f5811bbe4a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TPBrick

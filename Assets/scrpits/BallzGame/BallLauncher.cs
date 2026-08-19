@@ -4,6 +4,7 @@ using BallzGame.Balls;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace BallzGame.Managers
 {
@@ -19,6 +20,7 @@ namespace BallzGame.Managers
         private Vector2 inputTarget;
         public int BallCount;
         public Dictionary<BallData,int> ballDatas=new();
+        public Button SkipButton;
         private void Awake()
         {
             SetupEventTrigger();

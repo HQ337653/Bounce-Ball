@@ -1,4 +1,5 @@
 using UnityEngine;
+using Object = System.Object;
 
 namespace BallzGame.Bricks.SpecialBricks
 {
@@ -20,5 +21,9 @@ namespace BallzGame.Bricks.SpecialBricks
 
         }
 
+        public virtual void OnHit(bool alive, object sender)
+        {
+
+        }
     }
 }

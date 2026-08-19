@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4781613628121080030}
-  - component: {fileID: 6270477898728826529}
+  - component: {fileID: 2203156875612155207}
   m_Layer: 0
   m_Name: Explosion Possibility Enhance
   m_TagString: Untagged
@@ -26,13 +26,13 @@ Transform:
   m_GameObject: {fileID: 4367036872294501938}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 677.89325, y: 1212.9136, z: -467.79388}
+  m_LocalPosition: {x: 0.88019, y: 4.54579, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6270477898728826529
+--- !u!114 &2203156875612155207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,12 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4367036872294501938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7ed2619baa31df4ab8b07ca28b8e733, type: 3}
+  m_Script: {fileID: 11500000, guid: bb165d60396044ed8702134aeade0065, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AddExplosionBallPossibility
-  Name: Explosion Possibility +5
-  Description: Explosion Possibility +5
-  Icon: {fileID: -2413806693520163455, guid: a9b667ac98e035d48a522af6901c064a, type: 3}
-  Count: 0
+  m_EditorClassIdentifier: Assembly-CSharp::scrpits.BallzGame.BallzShopItem.AddExtraEffectShopItem
+  Name: Explosion % +5
+  Description: Explosion Ball Explosion  Possibility +5
+  Icon: {fileID: 21300000, guid: 2760ef8d31ddf444ab6f7b884636a503, type: 3}
   Price: 3
-  Buyable: 0
+  Count: 0
+  maxAmount: 5
+  target: 1
+  increment: 5

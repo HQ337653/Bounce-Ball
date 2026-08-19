@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11af44c4c4844861a0bde96431dc87c4, type: 3}
   m_Name: Normal Ball
   m_EditorClassIdentifier: Assembly-CSharp::scrpits.BallzGame.Balls.BallData
-  BallPrefab: {fileID: 4298680558977379742, guid: fa6e4896bfac3fe41b2b330bb2711109, type: 3}
-  Icon: {fileID: -2413806693520163455, guid: a9b667ac98e035d48a522af6901c064a, type: 3}
+  Icon: {fileID: 21300000, guid: 2b95371d38dd44c2e9582c3652402a27, type: 3}
   Name: Ball
   Description: Normal Ball

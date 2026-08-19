@@ -8,6 +8,7 @@ namespace BallzGame.Balls
 	{
 		[SerializeField]
 		private List<int> extraDamage = new List<int>();
+		private List<int> extraBottomBounceTime = new List<int>();
 		[ContextMenu("Init list")]
 		private void Awake()
 		{
@@ -15,7 +16,12 @@ namespace BallzGame.Balls
 			if (extraDamage.Count != count)
 			{
 				extraDamage = new List<int>(new int[count]);
-			} count = System.Enum.GetValues(typeof(EffectType)).Length;
+			}
+			if (extraBottomBounceTime.Count != count)
+			{
+				extraBottomBounceTime = new List<int>(new int[count]);
+			}
+			count = System.Enum.GetValues(typeof(EffectType)).Length;
 			if (effectValues.Count != count)
 			{
 				effectValues = new List<int>(new int[count]);
@@ -41,7 +47,37 @@ namespace BallzGame.Balls
 
 			return extraDamage[index];
 		}
+		public int GetExtraBottomBounceTime(BallType type)
+		{
+			int index = (int)type;
 
+			if (index >= extraBottomBounceTime.Count)
+				return 0;
+
+			return extraBottomBounceTime[index];
+		}
+		public void SetExtraBottomBounceTime(BallType type, int damage)
+		{
+			int index = (int)type;
+
+			while (extraBottomBounceTime.Count <= index)
+			{
+				extraBottomBounceTime.Add(0);
+			}
+
+			extraBottomBounceTime[index] = damage;
+		}
+		public void AddExtraBottomBounceTime(BallType type, int damage)
+		{
+			int index = (int)type;
+
+			while (extraBottomBounceTime.Count <= index)
+			{
+				extraBottomBounceTime.Add(0);
+			}
+
+			extraBottomBounceTime[index] += damage;
+		}
 		public void SetExtraDamage(BallType type, int damage)
 		{
 			int index = (int)type;

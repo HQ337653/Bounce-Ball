@@ -4,6 +4,8 @@ using BallzGame.Bricks.SpecialBricks;
 using BallzGame.Effects;
 using BallzGame.Managers;
 using UnityEngine;
+using UnityEngine.Events;
+using Object = System.Object;
 
 namespace BallzGame.Bricks
 {
@@ -18,6 +20,7 @@ namespace BallzGame.Bricks
         public BrickPoint PointPrefab;
         public SpecialBrick SpecialBrick;
         public List<BrickStatus> Status;
+        public UnityEvent<bool,object> OnHit;
         void Start()
         {
             VisualEffect.UpdateHPText(Hp, OriginalHp);
@@ -52,7 +55,7 @@ namespace BallzGame.Bricks
         }
 
         // 被 Ball 调用
-        public void TakeDamage(int damage, Vector2 force = new Vector2())
+        public void TakeDamage(int damage,Object sender ,Vector2 force = new Vector2())
         {
             int originalDefense = DefencePoint;
             int remainingDamage = damage;
@@ -79,6 +82,7 @@ namespace BallzGame.Bricks
             }
 
             // 再扣血
+           var alive = true;
             if (remainingDamage > 0)
             {
                 Hp -= remainingDamage;
@@ -89,9 +93,12 @@ namespace BallzGame.Bricks
 
                 if (Hp <= 0)
                 {
+                    alive=false;
                     Die(force);
                 }
             }
+            OnHit.Invoke(alive,sender);
+            SpecialBrick?.OnHit(alive,sender);
         }
 
         public void Die(Vector2 force)
